@@ -1,48 +1,54 @@
+<div align="center">
+
 # 🚀 AI Resume & Portfolio Builder
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green?logo=fastapi)](https://fastapi.tiangolo.com)
-[![HTML5](https://img.shields.io/badge/HTML5-Frontend-orange?logo=html5)](frontend/index.html)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com)
+[![GitHub Pages](https://img.shields.io/badge/Frontend-GitHub%20Pages-222?logo=github)](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder)
 
-> Build a **professional resume** and **personal portfolio** in minutes using AI — zero server errors, works offline, no signup required.
+**Build a professional resume + portfolio website in minutes with AI — zero server errors, works offline too.**
+
+[🌐 Live Demo](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
+[📖 API Docs](https://github.com/rohitnaiik420-ai/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
+[⚡ Offline Mode](#-offline-mode-no-server-needed)
+
+</div>
 
 ---
 
 ## ✨ Features
 
-| Feature | Details |
+| Feature | Description |
 |---|---|
-| 🎨 **4 Resume Templates** | Modern Blue, Dark Minimal, Green Tech, Classic B&W |
-| 🤖 **AI Resume Score** | Real-time scoring with breakdown and smart tips |
-| 📄 **PDF Download** | One-click print-ready PDF (jsPDF + html2canvas) |
-| 🌐 **Portfolio Export** | Auto-generate standalone portfolio HTML file |
-| 💾 **Auto-Save** | localStorage persistence, resumes survive page refresh |
-| ⚡ **Sample Profiles** | 3 built-in demo profiles to test instantly |
-| 📱 **Mobile Friendly** | Fully responsive layout |
-| 🔒 **100% Offline** | Works without any server — open index.html directly |
+| 📝 **7-Step Guided Form** | Personal info, education, experience, skills, projects, extras & template |
+| 🤖 **AI Resume Score** | Intelligent scoring (0–100) with actionable improvement tips |
+| 🎨 **4 Templates** | Modern Blue, Dark Minimal, Green Tech, Classic B&W |
+| 📄 **PDF Export** | Download print-ready PDF resume instantly |
+| 🌐 **Portfolio Generator** | Auto-generate a personal portfolio HTML page |
+| 💾 **Auto-Save** | Browser localStorage saves your progress automatically |
+| ⚡ **Sample Profiles** | 3 pre-built test profiles (AI Engineer, Designer, Cloud Architect) |
+| 🔌 **REST API Backend** | FastAPI backend with Swagger docs, AI scoring endpoints |
 
 ---
 
-## 📁 Project Structure
+## 🗂️ Project Structure
 
 ```
 AI-Resume-portfolio-builder/
-├── frontend/
-│   ├── index.html          ← Main app (self-contained, works offline)
+├── frontend/                  # 🌐 Frontend (runs standalone or via backend)
+│   ├── index.html             # Main app (self-contained, no build step needed)
 │   ├── css/
-│   │   └── style.css       ← External CSS utilities & print styles
+│   │   └── style.css
 │   └── js/
-│       └── app.js          ← Optional API integration layer
-├── backend/
-│   ├── server.py           ← FastAPI backend (score, suggestions, samples)
-│   ├── requirements.txt    ← Python dependencies
+│       └── app.js             # Optional API helper for backend integration
+│
+├── backend/                   # 🐍 FastAPI backend
+│   ├── server.py              # Main API server
+│   ├── requirements.txt       # Python dependencies
 │   └── __init__.py
-├── index.html              ← Root shortcut (same as frontend/index.html)
-├── launch.py               ← Smart Python launcher (auto port detection)
-├── LAUNCH_AGENT.bat        ← Windows interactive launcher menu
-├── Quick_Launch.vbs        ← Silent instant launcher (no console window)
-├── package.json            ← npm scripts for easy startup
+│
+├── index.html                 # Root entry (same as frontend/index.html)
+├── package.json               # npm scripts for convenience
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -50,102 +56,97 @@ AI-Resume-portfolio-builder/
 
 ---
 
-## 🚀 Quick Start
+## ⚡ Offline Mode (No Server Needed)
 
-### Option 1: Pure Offline (Zero Setup, Zero Server)
-Just open the file directly — no installation needed:
+Just open `index.html` in your browser — everything works 100% offline:
+
 ```bash
 # Windows
 start frontend/index.html
 
-# Or double-click LAUNCH_AGENT.bat
-```
-
-### Option 2: With FastAPI Backend (AI Score API + Suggestions)
-```bash
-# 1. Clone the repo
-git clone https://github.com/rohitnaiik420-ai/AI-Resume-portfolio-builder.git
-cd AI-Resume-portfolio-builder
-
-# 2. Install Python dependencies
-pip install -r backend/requirements.txt
-
-# 3. Start the backend
-uvicorn backend.server:app --reload --host 0.0.0.0 --port 8000
-
-# 4. Open the frontend
-start frontend/index.html
-# OR visit http://localhost:8000/static/index.html
-```
-
-### Option 3: npm Scripts
-```bash
-npm run setup         # Install all backend dependencies
-npm start             # Start FastAPI backend server
-npm run frontend      # Open frontend in browser
+# Mac / Linux
+open frontend/index.html
 ```
 
 ---
 
-## 🌐 API Endpoints
+## 🐍 Full-Stack Mode (With FastAPI Backend)
 
-Once backend is running at `http://localhost:8000`:
+### 1. Install Python dependencies
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+### 2. Start the backend server
+
+```bash
+uvicorn backend.server:app --reload --port 8000
+```
+
+### 3. Open the frontend
+
+```
+http://localhost:8000/app    ← Frontend served by backend
+http://localhost:8000/docs   ← Swagger API documentation
+http://localhost:8000/health ← Health check
+```
+
+---
+
+## 📡 API Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/` | API home page |
-| `GET` | `/health` | Health check |
+|--------|----------|-------------|
+| `GET`  | `/health` | Server health check |
 | `POST` | `/api/score` | Calculate AI resume score |
 | `POST` | `/api/validate` | Validate resume fields |
 | `POST` | `/api/ai-suggestions` | Get AI improvement suggestions |
-| `GET` | `/api/sample/{1\|2}` | Load demo profile data |
-| `GET` | `/docs` | Interactive Swagger UI |
-| `GET` | `/redoc` | ReDoc API documentation |
+| `GET`  | `/api/sample/{1,2,3}` | Load sample profiles for testing |
+| `GET`  | `/api/templates` | List available resume templates |
+| `GET`  | `/docs` | Interactive Swagger UI |
 
 ---
 
-## 📊 Resume Templates
+## 🧪 Test with Sample Data
 
-| Template | Best For |
-|---|---|
-| **Modern Blue** | Tech companies, Startups |
-| **Dark Minimal** | Creative & Design roles |
-| **Green Tech** | Sustainability, Environment |
-| **Classic B&W** | Finance, Law, Corporate |
+Use the built-in sample loader buttons in the app, or call the API directly:
+
+```bash
+# Load sample profile via API
+curl http://localhost:8000/api/sample/1
+
+# Score a resume via API  
+curl -X POST http://localhost:8000/api/score \
+  -H "Content-Type: application/json" \
+  -d '{"p":{"name":"Alex Rivera","title":"Engineer","email":"alex@example.com"},"sk":["Python","React","AWS"]}'
+```
+
+---
+
+## 🌐 Deploy to GitHub Pages (Frontend Only)
+
+The `frontend/index.html` is fully self-contained and deploys directly to GitHub Pages:
+
+1. Go to **Settings → Pages**
+2. Source: `main` branch → `/frontend` folder
+3. Your app is live at:  
+   `https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder`
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend**
-- Pure HTML5 + CSS3 + Vanilla JavaScript
-- [jsPDF](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js) for PDF generation
-- [html2canvas](https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js) for canvas capture
-- localStorage for client-side data persistence
-
-**Backend**
-- [FastAPI](https://fastapi.tiangolo.com/) — async Python web framework
-- [Pydantic v2](https://docs.pydantic.dev/) — data validation
-- [Uvicorn](https://www.uvicorn.org/) — ASGI server
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| PDF Export | jsPDF + html2canvas (CDN) |
+| Backend | Python 3.11+, FastAPI, Uvicorn |
+| Data Validation | Pydantic v2 |
+| Deployment | GitHub Pages (frontend) + any Python host (backend) |
 
 ---
 
-## 📝 License
+## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for full details.
-
----
-
-## 🙌 Contributing
-
-Pull requests are welcome! Open an issue first for major changes.
-
-```bash
-git checkout -b feature/your-feature
-git commit -m "feat: add your feature"
-git push origin feature/your-feature
-```
-
----
-
-Built with ❤️ by [rohitnaiik420-ai](https://github.com/rohitnaiik420-ai)
+MIT © [rohitnaiik420-ai](https://github.com/rohitnaiik420-ai)

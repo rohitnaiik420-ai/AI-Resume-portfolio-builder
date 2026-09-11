@@ -1,71 +1,57 @@
 /**
- * AI Resume & Portfolio Builder
- * Frontend utility module (optional API integration layer)
- * 
- * The app works 100% offline using localStorage.
- * This module optionally connects to the FastAPI backend for:
- *   - Server-side score calculation
- *   - AI suggestions
- *   - Sample profile loading
+ * AI Resume Builder - Optional API Helper
+ * Connects the frontend to the FastAPI backend when running with a server.
+ * Falls back gracefully to local-only mode (localStorage) if no backend.
  */
+const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? `${window.location.protocol}//${window.location.hostname}:8000`
+  : "";
 
-const API_BASE = "http://127.0.0.1:8000";
-
-// Check if backend is reachable
-async function checkBackend() {
-  try {
-    const res = await fetch(`${API_BASE}/health`, { method: "GET", signal: AbortSignal.timeout(2000) });
-    if (res.ok) {
-      const data = await res.json();
-      console.log("[Backend Connected]", data);
-      return true;
-    }
-  } catch {
-    console.log("[Backend] Not reachable - running in offline mode");
-  }
-  return false;
-}
-
-// Fetch AI score from backend
-async function fetchServerScore(resumeData) {
+async function apiScore(data) {
   try {
     const res = await fetch(`${API_BASE}/api/score`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(resumeData)
+      body: JSON.stringify(data)
     });
-    if (res.ok) return await res.json();
-  } catch (e) {
-    console.log("[Score] Using client-side calculation:", e.message);
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
+  } catch {
+    return null; // fallback to client-side scoring
   }
-  return null;
 }
 
-// Fetch AI suggestions from backend
-async function fetchAISuggestions(resumeData) {
+async function apiSuggestions(data) {
   try {
     const res = await fetch(`${API_BASE}/api/ai-suggestions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(resumeData)
+      body: JSON.stringify(data)
     });
-    if (res.ok) return await res.json();
-  } catch (e) {
-    console.log("[Suggestions] Using client-side mode:", e.message);
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
+  } catch {
+    return null;
   }
-  return null;
 }
 
-// Fetch a sample profile from backend
-async function fetchSampleFromServer(id) {
+async function apiSample(id) {
   try {
     const res = await fetch(`${API_BASE}/api/sample/${id}`);
-    if (res.ok) return await res.json();
-  } catch (e) {
-    console.log("[Sample] Using built-in profiles");
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
+  } catch {
+    return null;
   }
-  return null;
 }
 
-// Export for use in index.html
-window.ResumeAPI = { checkBackend, fetchServerScore, fetchAISuggestions, fetchSampleFromServer };
+async function apiHealth() {
+  try {
+    const res = await fetch(`${API_BASE}/health`);
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+window.ResumeAPI = { apiScore, apiSuggestions, apiSample, apiHealth, API_BASE };

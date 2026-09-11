@@ -2,19 +2,20 @@
 __pycache__/
 *.py[cod]
 *.pyo
-*.egg
+.env
+venv/
+.venv/
+env/
 *.egg-info/
 dist/
 build/
-.env
-venv/
-env/
-.venv/
+.pytest_cache/
 
 # Node
 node_modules/
 npm-debug.log*
-.npm
+yarn-debug.log*
+yarn-error.log*
 
 # OS
 .DS_Store
@@ -24,13 +25,16 @@ desktop.ini
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
+*.suo
+*.user
 
-# Build outputs
-*.pdf
+# Logs
 *.log
+logs/
 
-# Secrets
-.env.local
-.env.production
+# Local files (Windows launchers not needed on GitHub)
+LAUNCH_APP.bat
+LAUNCH_AGENT.bat
+Quick_Launch.vbs
+create_shortcut.ps1
+launch.py

@@ -1,20 +1,17 @@
 {
   "name": "ai-resume-portfolio-builder",
-  "version": "1.0.0",
-  "description": "AI-powered Resume & Portfolio Builder with 4 templates, PDF export, portfolio generation, and AI scoring.",
+  "version": "2.0.0",
+  "description": "AI-powered Resume & Portfolio Builder — 4 templates, PDF export, FastAPI backend, AI scoring.",
   "scripts": {
-    "start": "python -m uvicorn backend.server:app --host 0.0.0.0 --port 8000 --reload",
+    "backend": "uvicorn backend.server:app --reload --port 8000",
     "frontend": "start frontend/index.html",
-    "dev": "concurrently \"npm run start\" \"npm run frontend\"",
+    "dev": "uvicorn backend.server:app --reload --port 8000",
     "install-backend": "pip install -r backend/requirements.txt",
-    "setup": "npm run install-backend && echo Setup complete!"
+    "setup": "pip install -r backend/requirements.txt"
   },
-  "keywords": ["resume", "portfolio", "ai", "fastapi", "html", "css", "javascript"],
+  "keywords": ["resume", "portfolio", "ai", "fastapi", "python", "javascript"],
   "author": "rohitnaiik420-ai",
   "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rohitnaiik420-ai/AI-Resume-portfolio-builder.git"
