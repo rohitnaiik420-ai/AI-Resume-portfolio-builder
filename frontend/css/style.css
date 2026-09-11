@@ -1,0 +1,23 @@
+/* 
+  AI Resume & Portfolio Builder
+  External CSS (loaded for modular builds)
+  Main styles are embedded in index.html for zero-dependency offline mode.
+*/
+
+/* Utility override classes for customization */
+.accent-blue   { --accent: #00d4ff; }
+.accent-purple { --accent: #7c3aed; }
+.accent-green  { --accent: #10b981; }
+
+/* Print styles for PDF-ready resume output */
+@media print {
+  nav, .result-sidebar, .preview-tabs, .result-actions { display: none !important; }
+  #resume-output { padding: 0 !important; box-shadow: none !important; }
+  body { background: #fff !important; }
+}
+
+/* Accessibility: high-contrast focus rings */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
