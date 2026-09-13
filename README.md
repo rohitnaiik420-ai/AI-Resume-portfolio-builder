@@ -1,33 +1,31 @@
 <div align="center">
 
-# 🚀 AI Resume & Portfolio Builder
+# 🚀 AI Resume & Portfolio Builder v3.0
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 [![GitHub Pages](https://img.shields.io/badge/Frontend-GitHub%20Pages-222?logo=github)](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder)
 
-**Build a professional resume + portfolio website in minutes with AI — zero server errors, works offline too.**
+**Build, Tailor against Job Descriptions with STAR methodology, Publish Live Portfolios & Interact with an Embedded AI Recruiter Chatbot.**
 
-[🌐 Live Demo](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
-[📖 API Docs](https://github.com/rohitnaiik420-ai/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
+[🌐 Live Demo (GitHub Pages)](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
+[📖 API Docs (FastAPI)](http://localhost:8000/docs) &nbsp;|&nbsp;
 [⚡ Offline Mode](#-offline-mode-no-server-needed)
 
 </div>
 
 ---
 
-## ✨ Features
+## 🌟 What's New in v3.0
 
 | Feature | Description |
 |---|---|
-| 📝 **7-Step Guided Form** | Personal info, education, experience, skills, projects, extras & template |
-| 🤖 **AI Resume Score** | Intelligent scoring (0–100) with actionable improvement tips |
-| 🎨 **4 Templates** | Modern Blue, Dark Minimal, Green Tech, Classic B&W |
-| 📄 **PDF Export** | Download print-ready PDF resume instantly |
-| 🌐 **Portfolio Generator** | Auto-generate a personal portfolio HTML page |
-| 💾 **Auto-Save** | Browser localStorage saves your progress automatically |
-| ⚡ **Sample Profiles** | 3 pre-built test profiles (AI Engineer, Designer, Cloud Architect) |
-| 🔌 **REST API Backend** | FastAPI backend with Swagger docs, AI scoring endpoints |
+| 🎯 **Job Description (JD) Tailoring** | Paste any target JD to compute real-time ATS match percentage (0–100%) and see matched vs missing keywords. |
+| ✨ **STAR-Methodology AI Rewriter** | 1-Click optimization that rewrites experience bullet points into high-impact Situation-Task-Action-Result statements. |
+| 🚀 **1-Click Live Web Hosting** | Generate instant shareable live portfolio links (`#p=...` portable state or `/p/{slug}` backend URL) with QR code generator. |
+| 🤖 **Floating AI Recruiter Chatbot** | Context-aware AI chatbot widget embedded on your live portfolio to answer recruiter questions about skills, experience, and contact. |
+| ⚡ **Smart Auto-Import** | Enter your GitHub username to auto-import bio, repositories, stars, and languages into your portfolio in seconds. |
+| 📄 **LinkedIn / PDF Resume Parser** | Paste raw text or LinkedIn export to auto-populate all form fields. |
 
 ---
 
@@ -36,19 +34,19 @@
 ```
 AI-Resume-portfolio-builder/
 ├── frontend/                  # 🌐 Frontend (runs standalone or via backend)
-│   ├── index.html             # Main app (self-contained, no build step needed)
+│   ├── index.html             # Main app (self-contained, with AI chatbot & JD optimizer)
 │   ├── css/
 │   │   └── style.css
 │   └── js/
-│       └── app.js             # Optional API helper for backend integration
+│       └── app.js             # API helper client for FastAPI backend
 │
-├── backend/                   # 🐍 FastAPI backend
-│   ├── server.py              # Main API server
+├── backend/                   # 🐍 FastAPI backend v3.0
+│   ├── server.py              # Main API server with JD tailoring & live hosting
 │   ├── requirements.txt       # Python dependencies
 │   └── __init__.py
 │
-├── index.html                 # Root entry (same as frontend/index.html)
-├── package.json               # npm scripts for convenience
+├── index.html                 # Root entry (synchronized with frontend/index.html)
+├── package.json               # npm helper scripts
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -56,94 +54,60 @@ AI-Resume-portfolio-builder/
 
 ---
 
-## ⚡ Offline Mode (No Server Needed)
+## ⚡ Quick Start (No Server Needed - 100% Offline)
 
-Just open `index.html` in your browser — everything works 100% offline:
+Just double-click `index.html` or `LAUNCH_APP.bat` to launch in your browser:
 
 ```bash
 # Windows
-start frontend/index.html
+start index.html
 
 # Mac / Linux
-open frontend/index.html
+open index.html
 ```
 
 ---
 
 ## 🐍 Full-Stack Mode (With FastAPI Backend)
 
-### 1. Install Python dependencies
-
+### 1. Install dependencies
 ```bash
 pip install -r backend/requirements.txt
 ```
 
 ### 2. Start the backend server
-
 ```bash
 uvicorn backend.server:app --reload --port 8000
 ```
 
-### 3. Open the frontend
-
-```
-http://localhost:8000/app    ← Frontend served by backend
-http://localhost:8000/docs   ← Swagger API documentation
-http://localhost:8000/health ← Health check
-```
+### 3. Open in browser
+- **Web App**: [http://localhost:8000/app](http://localhost:8000/app)
+- **Interactive Swagger API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
 
 ---
 
-## 📡 API Endpoints
+## 📡 Backend API Endpoints
 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET`  | `/health` | Server health check |
-| `POST` | `/api/score` | Calculate AI resume score |
-| `POST` | `/api/validate` | Validate resume fields |
-| `POST` | `/api/ai-suggestions` | Get AI improvement suggestions |
-| `GET`  | `/api/sample/{1,2,3}` | Load sample profiles for testing |
-| `GET`  | `/api/templates` | List available resume templates |
-| `GET`  | `/docs` | Interactive Swagger UI |
+|---|---|---|
+| `GET` | `/health` | API health check |
+| `POST` | `/api/score` | Compute AI Resume Score (0-100%) |
+| `POST` | `/api/jd-tailor` | ATS Job Description match & STAR bullet rewriter |
+| `POST` | `/api/publish` | Publish portfolio and get permanent `/p/{slug}` URL |
+| `GET` | `/p/{slug}` | Render live public candidate portfolio with AI Chatbot |
+| `GET` | `/api/github-import/{user}` | Smart auto-import candidate info & repos from GitHub |
+| `GET` | `/api/sample/{1,2,3}` | Pre-built test profiles (AI Engineer, Designer, Cloud Architect) |
+| `GET` | `/docs` | Interactive Swagger UI |
 
 ---
 
-## 🧪 Test with Sample Data
+## 🌐 Deploy to GitHub Pages
 
-Use the built-in sample loader buttons in the app, or call the API directly:
-
-```bash
-# Load sample profile via API
-curl http://localhost:8000/api/sample/1
-
-# Score a resume via API  
-curl -X POST http://localhost:8000/api/score \
-  -H "Content-Type: application/json" \
-  -d '{"p":{"name":"Alex Rivera","title":"Engineer","email":"alex@example.com"},"sk":["Python","React","AWS"]}'
-```
-
----
-
-## 🌐 Deploy to GitHub Pages (Frontend Only)
-
-The `frontend/index.html` is fully self-contained and deploys directly to GitHub Pages:
-
-1. Go to **Settings → Pages**
-2. Source: `main` branch → `/frontend` folder
+1. Go to repository **Settings → Pages**
+2. Source: `main` branch → `/frontend` folder (or root `/`)
 3. Your app is live at:  
    `https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder`
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| PDF Export | jsPDF + html2canvas (CDN) |
-| Backend | Python 3.11+, FastAPI, Uvicorn |
-| Data Validation | Pydantic v2 |
-| Deployment | GitHub Pages (frontend) + any Python host (backend) |
 
 ---
 

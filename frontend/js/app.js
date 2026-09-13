@@ -1,8 +1,8 @@
 /**
- * AI Resume Builder - Optional API Helper
- * Connects the frontend to the FastAPI backend when running with a server.
- * Falls back gracefully to local-only mode (localStorage) if no backend.
+ * AI Resume & Portfolio Builder - API Helper Client v3.0
+ * Connects the frontend to the FastAPI backend with seamless local fallback.
  */
+
 const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   ? `${window.location.protocol}//${window.location.hostname}:8000`
   : "";
@@ -17,16 +17,16 @@ async function apiScore(data) {
     if (!res.ok) throw new Error("API error");
     return await res.json();
   } catch {
-    return null; // fallback to client-side scoring
+    return null;
   }
 }
 
-async function apiSuggestions(data) {
+async function apiJdTailor(resumeData, jdText) {
   try {
-    const res = await fetch(`${API_BASE}/api/ai-suggestions`, {
+    const res = await fetch(`${API_BASE}/api/jd-tailor`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ resume: resumeData, job_description: jdText })
     });
     if (!res.ok) throw new Error("API error");
     return await res.json();
@@ -35,9 +35,23 @@ async function apiSuggestions(data) {
   }
 }
 
-async function apiSample(id) {
+async function apiPublish(resumeData, customSlug = "") {
   try {
-    const res = await fetch(`${API_BASE}/api/sample/${id}`);
+    const res = await fetch(`${API_BASE}/api/publish`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resume: resumeData, custom_slug: customSlug })
+    });
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function apiGithubImport(username) {
+  try {
+    const res = await fetch(`${API_BASE}/api/github-import/${username}`);
     if (!res.ok) throw new Error("API error");
     return await res.json();
   } catch {
@@ -54,4 +68,11 @@ async function apiHealth() {
   }
 }
 
-window.ResumeAPI = { apiScore, apiSuggestions, apiSample, apiHealth, API_BASE };
+window.ResumeAPI = {
+  apiScore,
+  apiJdTailor,
+  apiPublish,
+  apiGithubImport,
+  apiHealth,
+  API_BASE
+};

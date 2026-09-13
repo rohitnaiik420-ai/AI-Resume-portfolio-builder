@@ -1,0 +1,65 @@
+{
+  "alex-rivera-test": {
+    "slug": "alex-rivera-test",
+    "data": {
+      "p": {
+        "name": "Alex Rivera",
+        "title": "Senior AI Engineer",
+        "email": "alex@example.com",
+        "phone": "+1 555-0199",
+        "location": "SF, CA",
+        "linkedin": "linkedin.com/in/alex",
+        "github": "github.com/alex",
+        "website": "alex.ai",
+        "summary": "Experienced engineer with deep ML and full-stack skills."
+      },
+      "edu": [
+        {
+          "degree": "M.S. CS",
+          "inst": "Stanford",
+          "start": "",
+          "end": "",
+          "gpa": "",
+          "loc": "",
+          "body": ""
+        }
+      ],
+      "exp": [
+        {
+          "title": "Lead Engineer",
+          "co": "Nexus",
+          "start": "",
+          "end": "",
+          "loc": "",
+          "type": "Full-time",
+          "body": "Spearheaded LLM pipelines"
+        }
+      ],
+      "proj": [
+        {
+          "name": "AI Platform",
+          "tech": "Python, React",
+          "url": "",
+          "dur": "",
+          "body": ""
+        }
+      ],
+      "cert": [],
+      "sk": [
+        "Python",
+        "FastAPI",
+        "React",
+        "Docker",
+        "Kubernetes",
+        "AWS"
+      ],
+      "ach": "",
+      "lang": "",
+      "vol": "",
+      "int_": "",
+      "tmpl": 1
+    },
+    "published_at": "2026-09-13 06:15:37 UTC",
+    "views": 1
+  }
+}
