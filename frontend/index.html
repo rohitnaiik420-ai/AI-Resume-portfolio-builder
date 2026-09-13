@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Resume &amp; Portfolio Builder v3.0</title>
+<title>AI Resume &amp; Portfolio Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -35,16 +35,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .page{position:relative;z-index:1;min-height:100vh;display:none}
 .page.active{display:block}
 
-/* HERO & LANDING */
+/* HERO */
 #landing{padding-top:80px}
 .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:calc(100vh - 80px);padding:60px 24px;gap:32px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:var(--accent);padding:6px 18px;border-radius:50px;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;animation:pulseGlow 2s ease-in-out infinite}
 @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.2)}50%{box-shadow:0 0 0 8px rgba(0,212,255,0)}}
-.hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;line-height:1.1;max-width:860px}
+.hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;line-height:1.1;max-width:840px}
 .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:620px;line-height:1.7}
+.hero p{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:600px;line-height:1.7}
 .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;transition:var(--transition);text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;transition:var(--transition);text-decoration:none}
 .btn-primary{background:var(--gradient);color:#fff;box-shadow:0 8px 32px rgba(0,212,255,0.25)}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.4)}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
@@ -71,9 +71,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .feature-card h3{font-size:1.08rem;font-weight:700;margin-bottom:8px}
 .feature-card p{color:var(--muted);font-size:0.88rem;line-height:1.6}
 
-/* FORM PAGE & WIZARD */
+/* HOW IT WORKS */
+.how-it-works{padding:80px 24px;background:var(--surface)}
+.steps{max-width:900px;margin:0 auto;display:flex;flex-direction:column}
+.step{display:flex;gap:24px;align-items:flex-start;padding:32px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{min-width:48px;height:48px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#fff;flex-shrink:0;box-shadow:0 4px 16px rgba(0,212,255,0.3)}
+.step-content h3{font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.step-content p{color:var(--muted);line-height:1.6}
+
+/* FORM & WIZARD */
 #fp{padding-top:80px;min-height:100vh}
-.form-container{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+.form-container{max-width:880px;margin:0 auto;padding:40px 24px 80px}
 .form-header{margin-bottom:30px}
 .form-header h2{font-size:2rem;font-weight:800;margin-bottom:8px}
 .form-header p{color:var(--muted)}
@@ -101,24 +110,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .form-textarea{resize:vertical;min-height:100px}
 .form-select option{background:var(--surface2)}
 
-/* AUTO-IMPORT & SMART TOOLS BANNER */
-.smart-import-card{background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(124,58,237,0.06));border:1px solid rgba(0,212,255,0.3);border-radius:var(--radius);padding:20px;margin-bottom:28px}
-.smart-import-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;font-weight:700;font-size:0.95rem;color:var(--accent)}
-.import-inputs{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.import-input-wrap{flex:1;min-width:220px;position:relative}
-
-/* JD TAILORING PANEL */
-.jd-panel{background:linear-gradient(135deg,rgba(245,158,11,0.05),rgba(124,58,237,0.05));border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius);padding:24px;margin-bottom:28px}
-.jd-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.jd-title{font-size:1.05rem;font-weight:800;color:var(--warning);display:flex;align-items:center;gap:8px}
-.ats-score-meter{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,0.3);padding:8px 16px;border-radius:50px;border:1px solid var(--border)}
-.ats-val{font-size:1.2rem;font-weight:800;color:var(--accent)}
-.keyword-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.kw-tag{padding:3px 10px;border-radius:50px;font-size:0.75rem;font-weight:600}
-.kw-tag.match{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:var(--accent3)}
-.kw-tag.missing{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
-
-/* ENTRIES & CARDS */
+/* ENTRY CARDS */
 .entry-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;margin-bottom:16px;transition:var(--transition)}
 .entry-card:hover{border-color:rgba(0,212,255,0.2)}
 .entry-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
@@ -159,14 +151,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .result-header h2{font-size:1.8rem;font-weight:800}
 .result-header p{color:var(--muted);margin-top:4px}
 .result-actions{display:flex;gap:12px;flex-wrap:wrap}
-.result-layout{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
+.result-layout{display:grid;grid-template-columns:1fr 370px;gap:32px;align-items:start}
 @media(max-width:900px){.result-layout{grid-template-columns:1fr}}
 .resume-preview-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative}
 .preview-tabs{display:flex;border-bottom:1px solid var(--border)}
 .preview-tab{flex:1;padding:14px;text-align:center;font-size:0.85rem;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:transparent;transition:var(--transition);border-bottom:2px solid transparent}
 .preview-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(0,212,255,0.04)}
 
-/* RESUME OUTPUT FORMATS */
+/* RESUME THEMES */
 #resume-output{background:#fff;color:#000;padding:40px;min-height:600px;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;line-height:1.5}
 #resume-output.tmpl-1 .r-hdr{background:linear-gradient(135deg,#1e40af,#0ea5e9);color:#fff;padding:28px;margin:-40px -40px 28px}
 #resume-output.tmpl-1 .r-name{font-size:26px;font-weight:800}
@@ -254,7 +246,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .act-ed{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 .act-ed:hover{border-color:var(--accent);color:var(--accent)}
 
-/* SHARE / PUBLISH MODAL */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
 .modal-overlay.open{display:flex}
 .modal-box{background:var(--surface);border:1px solid var(--accent);border-radius:24px;max-width:540px;width:100%;padding:32px;box-shadow:0 20px 60px rgba(0,212,255,0.25);position:relative;animation:fadeInUp 0.3s ease}
@@ -262,9 +254,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .modal-close:hover{color:#fff}
 .share-link-box{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:6px;margin:18px 0}
 .share-input{flex:1;background:transparent;border:none;color:var(--accent);font-family:monospace;font-size:0.85rem;padding:8px 12px;outline:none}
-.qr-wrap{background:#fff;border-radius:12px;padding:16px;width:160px;height:160px;margin:16px auto;display:flex;align-items:center;justify-content:center}
+.qr-wrap{background:#fff;border-radius:12px;padding:16px;width:150px;height:150px;margin:16px auto;display:flex;align-items:center;justify-content:center}
 
-/* FLOATING AI RECRUITER CHATBOT IN PREVIEW */
+/* FLOATING RECRUITER CHATBOT */
 .recruiter-chat-toggle{position:absolute;bottom:20px;right:20px;z-index:90;background:var(--gradient);color:#fff;border:none;border-radius:50px;padding:10px 18px;font-size:0.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 6px 20px rgba(0,212,255,0.3)}
 .recruiter-chat-window{position:absolute;bottom:70px;right:20px;z-index:95;width:340px;max-width:calc(100% - 40px);height:420px;background:#111827;border:1px solid var(--accent);border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,0.7);display:none;flex-direction:column;overflow:hidden}
 .r-chat-head{background:linear-gradient(135deg,#1e3a5f,#111827);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
@@ -321,7 +313,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <path d="M7 13l4 4 8-8" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       <defs><linearGradient id="g1" x1="0" y1="0" x2="26" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
     </svg>
-    AI Resume &amp; Portfolio v3.0
+    AI Resume &amp; Portfolio Builder
   </div>
   <div class="nav-links">
     <button class="nav-btn ghost" onclick="pg('landing')">Home</button>
@@ -334,34 +326,47 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <!-- LANDING PAGE -->
 <div id="landing" class="page active">
   <section class="hero">
-    <div class="hero-badge">&#x2728; AI Resume &amp; Portfolio Builder v3.0</div>
-    <h1>Build, <span class="gradient-text">Tailor to Any Job</span> &amp; Host Your Portfolio Live</h1>
-    <p>Smart GitHub auto-import, ATS job description tailoring with STAR bullet rewriter, live 1-click web hosting, and an embedded AI Recruiter Chatbot.</p>
+    <div class="hero-badge">&#x2728; AI-Powered Resume Builder</div>
+    <h1>Build Your <span class="gradient-text">Dream Resume</span><br>in Minutes</h1>
+    <p>Create a professional resume and personal portfolio with AI. Fill in your details and let AI handle the rest.</p>
     <div class="hero-cta">
       <button class="btn btn-primary" onclick="pg('fp')">&#x1F680; Start Building Free</button>
       <button class="btn btn-outline" onclick="loadSample(1)">⚡ Load Demo Profile</button>
-      <button class="btn btn-outline" onclick="document.getElementById('feats').scrollIntoView({behavior:'smooth'})">&#x2728; Explore Features</button>
+      <button class="btn btn-outline" onclick="document.getElementById('feats').scrollIntoView({behavior:'smooth'})">&#x2728; See Features</button>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">ATS Optimized</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Templates</div></div>
       <div class="stat"><div class="stat-num">STAR</div><div class="stat-label">AI Rewriter</div></div>
-      <div class="stat"><div class="stat-num">1-Click</div><div class="stat-label">Live Hosting</div></div>
-      <div class="stat"><div class="stat-num">AI Chat</div><div class="stat-label">Recruiter Bot</div></div>
+      <div class="stat"><div class="stat-num">PDF</div><div class="stat-label">Download</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free &amp; Offline</div></div>
     </div>
   </section>
 
   <section class="features" id="feats">
     <div class="section-title">
-      <h2>Advanced Features Built for <span class="gradient-text">Modern Engineers</span></h2>
-      <p>Everything you need to bypass ATS filters and impress tech recruiters</p>
+      <h2>Everything You Need to <span class="gradient-text">Stand Out</span></h2>
+      <p>Powerful features built for modern professionals</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon c1">&#x1F3AF;</div><h3>JD &amp; ATS Tailoring</h3><p>Paste any job description to compute real-time ATS match score, view missing keywords, and rewrite bullets via STAR method.</p></div>
-      <div class="feature-card"><div class="feature-icon c2">&#x1F310;</div><h3>1-Click Live Web Hosting</h3><p>Publish a live shareable URL instantly with zero server errors, portable state encoding, and custom QR codes for recruiters.</p></div>
-      <div class="feature-card"><div class="feature-icon c3">&#x1F916;</div><h3>AI Recruiter Chatbot</h3><p>Embedded interactive AI chatbot on your portfolio answers recruiter queries using your candidate profile as strict knowledge base.</p></div>
-      <div class="feature-card"><div class="feature-icon c4">&#x26A1;</div><h3>Smart Auto-Import</h3><p>One-click import from GitHub username (bio, repos, stars, languages) and LinkedIn/PDF text parser.</p></div>
-      <div class="feature-card"><div class="feature-icon c5">&#x1F4C4;</div><h3>Print-Ready PDF</h3><p>Export pixel-perfect PDF resumes with 4 curated themes without watermarks or formatting bugs.</p></div>
-      <div class="feature-card"><div class="feature-icon c6">&#x1F4BE;</div><h3>Auto-Save &amp; Offline</h3><p>All candidate data persists locally in browser memory. Work seamlessly offline or full-stack.</p></div>
+      <div class="feature-card"><div class="feature-icon c1">&#x1F4DD;</div><h3>Step-by-Step Form</h3><p>Guided wizard collects education, skills, projects, experience, and certifications effortlessly.</p></div>
+      <div class="feature-card"><div class="feature-icon c2">&#x1F916;</div><h3>AI Optimization</h3><p>Smart AI suggestions improve your resume score and make it ATS-friendly automatically.</p></div>
+      <div class="feature-card"><div class="feature-icon c3">&#x1F3A8;</div><h3>Multiple Templates</h3><p>Choose from 4 professional templates: Modern, Dark, Tech, and Classic styles.</p></div>
+      <div class="feature-card"><div class="feature-icon c4">&#x1F4C4;</div><h3>PDF Download</h3><p>Download your resume as a print-ready PDF instantly. No watermarks, completely free.</p></div>
+      <div class="feature-card"><div class="feature-icon c5">&#x1F310;</div><h3>Portfolio Generator</h3><p>Auto-generate a sleek personal portfolio webpage with About, Skills, Projects &amp; Contact.</p></div>
+      <div class="feature-card"><div class="feature-icon c6">&#x1F4BE;</div><h3>Auto-Save</h3><p>Data saved locally in your browser. Return anytime and continue where you left off.</p></div>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <div class="section-title" style="padding-top:60px">
+      <h2>How It <span class="gradient-text">Works</span></h2>
+      <p>Build your resume in 4 simple steps</p>
+    </div>
+    <div class="steps" style="max-width:700px;margin:0 auto;padding:0 24px 60px">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Fill Your Information</h3><p>Enter your personal details, education, work experience, skills, and projects through our guided form.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Choose a Template</h3><p>Select from 4 professionally designed resume templates to match your style and industry.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h3>AI Optimization</h3><p>Our AI analyzes your content and provides suggestions to improve your resume score.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Download &amp; Share</h3><p>Download as PDF or publish your live portfolio with embedded AI Recruiter Chatbot.</p></div></div>
     </div>
   </section>
 </div>
@@ -370,51 +375,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div id="fp" class="page">
   <div class="form-container">
     <div class="form-header">
-      <h2>&#x1F4CB; AI Resume &amp; Portfolio Builder</h2>
-      <p>Fill in your details, import from GitHub, or tailor your resume against any Job Description.</p>
+      <h2>&#x1F4CB; Build Your Resume</h2>
+      <p>Fill in your details below or load a pre-built sample profile to test instantly:</p>
       
-      <!-- QUICK SAMPLE PROFILE BUTTONS -->
-      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <!-- QUICK SAMPLE PROFILE BUTTONS & SMART IMPORT -->
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center">
         <button class="btn" style="padding:8px 18px;font-size:0.82rem;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff" onclick="loadSample(1)">⚡ Senior AI Engineer</button>
         <button class="btn" style="padding:8px 18px;font-size:0.82rem;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff" onclick="loadSample(2)">🎨 Product Designer</button>
         <button class="btn" style="padding:8px 18px;font-size:0.82rem;background:linear-gradient(135deg,#10b981,#0284c7);color:#fff" onclick="loadSample(3)">☁️ Cloud Architect</button>
-      </div>
-    </div>
-
-    <!-- FEATURE 4: SMART AUTO-IMPORT BANNER (Step 1 or Anywhere) -->
-    <div class="smart-import-card">
-      <div class="smart-import-title">
-        <span>⚡ Smart Auto-Import (GitHub &amp; LinkedIn/Resume Text)</span>
-        <span style="font-size:0.75rem;color:var(--muted);font-weight:400">Save 10+ minutes of manual entry</span>
-      </div>
-      <div class="import-inputs">
-        <div class="import-input-wrap">
-          <input type="text" class="form-input" id="ghUserInput" placeholder="GitHub username (e.g. torvalds or rohitnaiik420-ai)" style="padding:9px 14px;font-size:0.88rem" onkeydown="if(event.key==='Enter')importGitHub()">
-        </div>
-        <button class="btn btn-primary" style="padding:9px 18px;font-size:0.85rem" onclick="importGitHub()">🐙 Import GitHub Profile</button>
-        <button class="btn btn-outline" style="padding:9px 18px;font-size:0.85rem" onclick="openTextImportModal()">📄 Paste Resume / LinkedIn Text</button>
-      </div>
-    </div>
-
-    <!-- FEATURE 1: JOB DESCRIPTION (JD) TAILORING & ATS OPTIMIZER -->
-    <div class="jd-panel" id="jdPanel">
-      <div class="jd-header">
-        <div class="jd-title">🎯 Job Description (JD) Tailoring &amp; Real-Time ATS Optimizer</div>
-        <div class="ats-score-meter">
-          <span style="font-size:0.8rem;color:var(--muted)">ATS Match:</span>
-          <span class="ats-val" id="atsScoreVal">0%</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <textarea class="form-textarea" id="jdInput" placeholder="Paste the target Job Description here to analyze keyword match and rewrite your experience with STAR methodology..." style="min-height:90px" oninput="analyzeJD()"></textarea>
-      </div>
-      <div id="jdAnalysisResult" style="display:none;margin-top:12px">
-        <div style="font-size:0.82rem;font-weight:700;color:var(--muted);margin-bottom:6px">ATS KEYWORDS DETECTION:</div>
-        <div class="keyword-tags" id="jdKeywords"></div>
-        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-          <button class="btn" style="background:var(--gradient3);color:#fff;padding:9px 20px;font-size:0.85rem" onclick="optimizeForJD()">✨ 1-Click Optimize Resume for JD (STAR Method)</button>
-          <button class="btn btn-outline" style="padding:9px 16px;font-size:0.85rem" onclick="clearJD()">Clear JD</button>
-        </div>
+        <button class="btn btn-outline" style="padding:8px 16px;font-size:0.82rem" onclick="openSmartImportModal()">⚡ Smart Auto-Import (GitHub / Text)</button>
       </div>
     </div>
 
@@ -447,21 +416,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
         <label>Professional Summary <span class="req">*</span></label>
         <textarea class="form-textarea" id="f_summary" placeholder="Write 2-3 sentences about your professional background, key skills, and career goals..." style="min-height:110px"></textarea>
       </div>
-      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>Writing a Great Summary</h4><p>Mention: <strong>your role + years of experience</strong>, <strong>top 2-3 skills</strong>, and <strong>what value you bring</strong>. Use active verbs!</p></div>
+      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>Writing a Great Summary</h4><p>Mention: <strong>your role + years of experience</strong>, <strong>top 2-3 skills</strong>, and <strong>what value you bring</strong>. Keep it under 3 sentences.</p></div>
     </div>
 
     <!-- STEP 1: Education -->
     <div class="form-step" id="step-1">
       <div id="eduE"></div>
       <button class="btn-add" onclick="addEdu()">+ Add Education</button>
-      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>Education Section</h4><p>List most recent first. Include <strong>relevant coursework, honors, GPA (above 3.5)</strong>, and capstone highlights.</p></div>
+      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>Education Section</h4><p>List most recent first. Include <strong>relevant coursework, honors, GPA (above 3.5)</strong>, and extracurriculars.</p></div>
     </div>
 
-    <!-- STEP 2: Experience -->
+    <!-- STEP 2: Experience (Includes JD Tailor Tool) -->
     <div class="form-step" id="step-2">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <h3 style="font-size:1.1rem">Work History</h3>
+        <button class="btn btn-outline" style="padding:6px 14px;font-size:0.8rem;border-color:var(--warning);color:var(--warning)" onclick="openJdModal()">🎯 Tailor Experience to Target Job Description (STAR Method)</button>
+      </div>
       <div id="expE"></div>
       <button class="btn-add" onclick="addExp()">+ Add Experience</button>
-      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>STAR Methodology Bullets</h4><p>Use <strong>Action Verbs</strong> (Spearheaded, Architected, Engineered) + <strong>Situation/Task</strong> + <strong>Quantifiable Results</strong> (e.g. "reducing latency by 45%").</p></div>
+      <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>STAR Methodology Experience</h4><p>Use <strong>Action Verbs</strong> (Spearheaded, Architected, Engineered) + <strong>Situation/Task</strong> + <strong>Quantifiable Results</strong> (e.g. "reducing latency by 45%").</p></div>
     </div>
 
     <!-- STEP 3: Skills -->
@@ -513,7 +486,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <button class="btn-prev" id="bPrev" onclick="prev()" style="display:none">&#8592; Previous</button>
       <div style="flex:1"></div>
       <button class="btn-next" id="bNext" onclick="nxt()">Next &#8594;</button>
-      <button class="btn-generate" id="bGen" onclick="gen()" style="display:none">&#x2728; Generate Resume &amp; Portfolio</button>
+      <button class="btn-generate" id="bGen" onclick="gen()" style="display:none">&#x2728; Generate Resume</button>
     </div>
   </div>
 </div>
@@ -523,7 +496,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <div class="result-container">
     <div class="result-header">
       <div>
-        <h2>Your Resume &amp; Portfolio are Ready! &#x1F389;</h2>
+        <h2>Your Resume is Ready! &#x1F389;</h2>
         <p>Preview below, download PDF, or publish your live portfolio URL for recruiters.</p>
       </div>
       <div class="result-actions">
@@ -537,17 +510,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <!-- PREVIEW TABS & CANVAS -->
       <div class="resume-preview-wrap">
         <div class="preview-tabs">
-          <button class="preview-tab active" onclick="swTab('res',this)">&#x1F4C4; Resume Preview</button>
-          <button class="preview-tab" onclick="swTab('port',this)">&#x1F310; Portfolio Preview</button>
+          <button class="preview-tab active" onclick="swTab('res',this)">&#x1F4C4; Resume</button>
+          <button class="preview-tab" onclick="swTab('port',this)">&#x1F310; Portfolio</button>
         </div>
         
         <div id="resume-output" class="tmpl-1"></div>
-        
-        <div id="portfolio-output" style="display:none">
-          <!-- Portfolio generated content goes here -->
-        </div>
+        <div id="portfolio-output" style="display:none"></div>
 
-        <!-- FEATURE 3: FLOATING AI RECRUITER CHATBOT ON PORTFOLIO PREVIEW -->
+        <!-- FLOATING AI RECRUITER CHATBOT ON PORTFOLIO PREVIEW -->
         <button class="recruiter-chat-toggle" id="portChatToggle" style="display:none" onclick="togglePortfolioChat()">
           💬 Ask AI Recruiter
         </button>
@@ -559,7 +529,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
           </div>
           <div class="r-chat-body" id="rChatMsgs">
             <div class="r-msg b">
-              Hi! I am the AI Recruiter Assistant for this candidate. Ask me about their tech stack, key achievements, or past projects!
+              Hi! I am this candidate's AI Recruiter Assistant. Ask me anything about their technical skills, past experience, or projects!
               <div class="r-chat-chips">
                 <span class="r-chip" onclick="askRChat('What are their top technical skills?')">⚡ Skills</span>
                 <span class="r-chip" onclick="askRChat('Tell me about their experience')">💼 Experience</span>
@@ -579,20 +549,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="r-sidebar">
         <!-- AI SCORE -->
         <div class="s-card">
-          <h3>&#x1F916; AI Resume &amp; ATS Score</h3>
+          <h3>&#x1F916; AI Resume Score</h3>
           <div style="text-align:center;padding:8px 0">
             <div class="score-circle" id="sCir"><div class="score-inner"><div class="score-n" id="sNum">0</div><div class="score-l">/ 100</div></div></div>
           </div>
           <div class="score-bd" id="sBd"></div>
         </div>
 
-        <!-- QUICK ACTIONS (FEATURE 2: PUBLISH LIVE URL) -->
+        <!-- QUICK ACTIONS -->
         <div class="s-card">
           <h3>&#x26A1; Quick Actions</h3>
           <button class="act-btn act-pub" onclick="publishLivePortfolio()">🚀 Publish &amp; Get Live Portfolio URL</button>
           <button class="act-btn act-dl" onclick="dlPDF()">&#x1F4E5; Download PDF Resume</button>
           <button class="act-btn act-port" onclick="dlPort()">&#x1F310; Save Standalone Portfolio HTML</button>
-          <button class="act-btn act-ed" onclick="pg('fp')">&#x270F; Edit Information / Tailor JD</button>
+          <button class="act-btn act-ed" onclick="openJdModal()">🎯 Tailor Against Job Description (JD)</button>
+          <button class="act-btn act-ed" onclick="pg('fp')">&#x270F; Edit Information</button>
           <button class="act-btn act-ed" onclick="pg('landing')">&#x1F3E0; Back to Home</button>
         </div>
 
@@ -606,7 +577,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </div>
 </div>
 
-<!-- FEATURE 2: 1-CLICK LIVE SHARE MODAL -->
+<!-- SHARE / PUBLISH MODAL -->
 <div class="modal-overlay" id="shareModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeShareModal()">✕</button>
@@ -622,9 +593,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     </div>
 
     <!-- QR CODE -->
-    <div class="qr-wrap" id="qrContainer">
-      <!-- QR generated as SVG -->
-    </div>
+    <div class="qr-wrap" id="qrContainer"></div>
     <div style="text-align:center;font-size:0.75rem;color:var(--muted);margin-bottom:16px">Scan with mobile to view portfolio instantly</div>
 
     <div style="display:flex;gap:10px;justify-content:center">
@@ -634,16 +603,52 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </div>
 </div>
 
-<!-- TEXT / LINKEDIN RESUME PARSE MODAL -->
-<div class="modal-overlay" id="textImportModal">
-  <div class="modal-box" style="max-width:600px">
-    <button class="modal-close" onclick="closeTextImportModal()">✕</button>
-    <h3 style="font-size:1.2rem;font-weight:800;color:var(--accent);margin-bottom:8px">📄 Smart Text / LinkedIn Resume Parser</h3>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:14px">Paste raw text copied from your LinkedIn profile or existing resume PDF to auto-fill the form:</p>
-    <textarea class="form-textarea" id="rawResumeText" placeholder="Paste your resume text here (e.g. Name, Email, Experience, Skills)..." style="min-height:160px;margin-bottom:14px"></textarea>
-    <div style="display:flex;justify-content:flex-end;gap:10px">
-      <button class="btn btn-outline" onclick="closeTextImportModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="parseRawResumeText()">✨ Parse &amp; Populate Form</button>
+<!-- SMART AUTO-IMPORT MODAL -->
+<div class="modal-overlay" id="smartImportModal">
+  <div class="modal-box" style="max-width:580px">
+    <button class="modal-close" onclick="closeSmartImportModal()">✕</button>
+    <h3 style="font-size:1.2rem;font-weight:800;color:var(--accent);margin-bottom:8px">⚡ Smart Auto-Import Profile</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px">Quickly import details from your public GitHub account or paste existing resume text:</p>
+    
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+      <label style="font-weight:700;font-size:0.85rem;color:#fff;display:block;margin-bottom:8px">🐙 1. Import from GitHub Username</label>
+      <div style="display:flex;gap:8px">
+        <input type="text" class="form-input" id="modalGhInput" placeholder="e.g. torvalds or rohitnaiik420-ai" style="padding:8px 12px;font-size:0.85rem">
+        <button class="btn btn-primary" style="padding:8px 16px;font-size:0.82rem;white-space:nowrap" onclick="importFromGitHubModal()">Import GitHub</button>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px">
+      <label style="font-weight:700;font-size:0.85rem;color:#fff;display:block;margin-bottom:8px">📄 2. Paste Resume / LinkedIn Text</label>
+      <textarea class="form-textarea" id="modalTextInput" placeholder="Paste your resume or LinkedIn profile text here to auto-fill..." style="min-height:100px;margin-bottom:10px"></textarea>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-outline" style="padding:8px 16px;font-size:0.82rem" onclick="parseTextModal()">✨ Parse Text into Form</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JD TAILORING MODAL -->
+<div class="modal-overlay" id="jdModal">
+  <div class="modal-box" style="max-width:620px">
+    <button class="modal-close" onclick="closeJdModal()">✕</button>
+    <h3 style="font-size:1.2rem;font-weight:800;color:var(--warning);margin-bottom:6px">🎯 Job Description (JD) &amp; ATS Tailoring</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:14px">Paste target job description to match ATS keywords and rewrite experience bullets using STAR methodology:</p>
+    
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <label style="font-size:0.82rem;font-weight:700;color:var(--text)">Target Job Description:</label>
+      <span style="font-size:0.85rem;font-weight:800;color:var(--accent)" id="modalAtsScore">ATS Match: 0%</span>
+    </div>
+    <textarea class="form-textarea" id="modalJdInput" placeholder="Paste job description here (skills, responsibilities, requirements)..." style="min-height:120px" oninput="analyzeModalJd()"></textarea>
+    
+    <div id="modalJdResult" style="display:none;margin-top:10px">
+      <div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:4px">DETECTED ATS KEYWORDS:</div>
+      <div id="modalJdKws" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn btn-outline" onclick="closeJdModal()">Close</button>
+      <button class="btn" style="background:var(--gradient3);color:#fff;padding:8px 18px;font-size:0.85rem" onclick="optimizeFromJdModal()">✨ 1-Click Optimize for JD (STAR Method)</button>
     </div>
   </div>
 </div>
@@ -710,7 +715,7 @@ function toast(msg,type){
   c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(100%)';t.style.transition='0.3s ease';setTimeout(function(){t.remove();},300);},3500);
 }
 
-// ====== FORM ENTRIES (EDUCATION, EXPERIENCE, PROJECTS, CERTS) ======
+// ====== FORM ENTRIES ======
 function addEdu(d){
   d=d||{};var id=uid();eList.push(id);
   var div=document.createElement('div');div.className='entry-card';div.id='e'+id;
@@ -782,7 +787,7 @@ function remSkill(sk){skills=skills.filter(function(s){return s!==sk;});rSkills(
 function rSkills(){document.getElementById('skillTags').innerHTML=skills.map(function(s){return '<div class="skill-tag">'+eh(s)+'<button onclick="remSkill(\''+s.replace(/\'/g,"\\'")+'\')" title="Remove">x</button></div>';}).join('');}
 function selTmpl(n,el){tmpl=n;document.querySelectorAll('.template-card').forEach(function(c){c.classList.remove('selected');});el.classList.add('selected');save();}
 
-// ====== LOCAL STORAGE & FORM STATE ======
+// ====== LOCAL STORAGE & STATE ======
 function getResumeState(){
   return {
     p:{name:gv('f_name'),title:gv('f_title'),email:gv('f_email'),phone:gv('f_phone'),loc:gv('f_location'),li:gv('f_linkedin'),gh:gv('f_github'),web:gv('f_website'),sum:gv('f_summary')},
@@ -821,15 +826,16 @@ function initE(){
   if(!document.getElementById('projE').children.length)addProj();
 }
 
-// ====== FEATURE 4: SMART AUTO-IMPORT (GITHUB & TEXT/LINKEDIN) ======
-async function importGitHub(){
-  var input = document.getElementById('ghUserInput');
-  var username = input.value.trim().replace(/^@/,'');
+// ====== SMART AUTO-IMPORT ======
+function openSmartImportModal(){document.getElementById('smartImportModal').classList.add('open');}
+function closeSmartImportModal(){document.getElementById('smartImportModal').classList.remove('open');}
+
+async function importFromGitHubModal(){
+  var username = document.getElementById('modalGhInput').value.trim().replace(/^@/,'');
   if(!username){toast('Please enter a GitHub username','err');return;}
   toast('Fetching GitHub profile for @' + username + '...','ok');
 
   try {
-    // 1. Try public GitHub API
     var userRes = await fetch('https://api.github.com/users/' + username);
     if (!userRes.ok) throw new Error('GitHub user not found');
     var user = await userRes.json();
@@ -837,28 +843,21 @@ async function importGitHub(){
     var reposRes = await fetch('https://api.github.com/users/' + username + '/repos?sort=updated&per_page=8');
     var repos = reposRes.ok ? await reposRes.json() : [];
 
-    // Auto-fill fields
     if (user.name) document.getElementById('f_name').value = user.name;
     if (user.bio) {
       document.getElementById('f_title').value = user.bio.substring(0, 40) || 'Software Engineer';
-      document.getElementById('f_summary').value = user.bio + ' Active open-source contributor and software engineer with public repositories on GitHub.';
+      document.getElementById('f_summary').value = user.bio + ' Active software engineer and open-source contributor.';
     }
     if (user.email) document.getElementById('f_email').value = user.email;
     if (user.location) document.getElementById('f_location').value = user.location;
     if (user.blog) document.getElementById('f_website').value = user.blog.startsWith('http') ? user.blog : 'https://' + user.blog;
     document.getElementById('f_github').value = user.html_url || 'github.com/' + username;
 
-    // Collect skills from repos languages
     var foundLangs = [];
-    repos.forEach(function(r){
-      if(r.language && !foundLangs.includes(r.language)) foundLangs.push(r.language);
-    });
-    foundLangs.forEach(function(l){
-      if(!skills.includes(l)) skills.push(l);
-    });
+    repos.forEach(function(r){if(r.language && !foundLangs.includes(r.language)) foundLangs.push(r.language);});
+    foundLangs.forEach(function(l){if(!skills.includes(l)) skills.push(l);});
     rSkills();
 
-    // Auto-fill top projects
     document.getElementById('projE').innerHTML = '';
     pList = [];
     var count = 0;
@@ -876,41 +875,17 @@ async function importGitHub(){
     });
 
     save();
-    toast('GitHub profile for @' + username + ' imported successfully! 🎉','ok');
+    closeSmartImportModal();
+    toast('GitHub profile for @' + username + ' imported! 🎉','ok');
   } catch(err) {
-    // Fallback: try local backend if running
-    try {
-      var bRes = await fetch('/api/github-import/' + username);
-      if(bRes.ok){
-        var bData = await bRes.json();
-        if(bData.personal){
-          document.getElementById('f_name').value = bData.personal.name || '';
-          document.getElementById('f_title').value = bData.personal.title || '';
-          document.getElementById('f_summary').value = bData.personal.summary || '';
-        }
-        (bData.skills || []).forEach(function(s){if(!skills.includes(s))skills.push(s);});
-        rSkills();
-        save();
-        toast('GitHub profile imported!','ok');
-        return;
-      }
-    } catch(e2){}
-    toast('Could not fetch GitHub profile: ' + err.message,'err');
+    toast('GitHub fetch notice: ' + err.message,'err');
   }
 }
 
-function openTextImportModal(){
-  document.getElementById('textImportModal').classList.add('open');
-}
-function closeTextImportModal(){
-  document.getElementById('textImportModal').classList.remove('open');
-}
+function parseTextModal(){
+  var raw = document.getElementById('modalTextInput').value.trim();
+  if(!raw){toast('Please paste text first','err');return;}
 
-function parseRawResumeText(){
-  var raw = document.getElementById('rawResumeText').value.trim();
-  if(!raw){toast('Please paste some text first','err');return;}
-
-  // Heuristic extraction
   var emailMatch = raw.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/i);
   var phoneMatch = raw.match(/(\+?\d{1,3}[-.\s]?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{3,4})/);
   var liMatch = raw.match(/(linkedin\.com\/in\/[a-zA-Z0-9_-]+)/i);
@@ -921,7 +896,6 @@ function parseRawResumeText(){
   if(liMatch) document.getElementById('f_linkedin').value = 'https://' + liMatch[1];
   if(ghMatch) document.getElementById('f_github').value = 'https://' + ghMatch[1];
 
-  // Extract skills
   var rawLower = raw.toLowerCase();
   TECH_DICTIONARY.forEach(function(tech){
     if(rawLower.includes(tech.toLowerCase()) && !skills.includes(tech)){
@@ -930,114 +904,75 @@ function parseRawResumeText(){
   });
   rSkills();
 
-  // First lines heuristics for name & title
   var lines = raw.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
-  if(lines.length>0 && lines[0].length < 40 && !lines[0].includes('@')) {
-    document.getElementById('f_name').value = lines[0];
-  }
-  if(lines.length>1 && lines[1].length < 60 && !lines[1].includes('@')) {
-    document.getElementById('f_title').value = lines[1];
-  }
+  if(lines.length>0 && lines[0].length < 40 && !lines[0].includes('@')) document.getElementById('f_name').value = lines[0];
+  if(lines.length>1 && lines[1].length < 60 && !lines[1].includes('@')) document.getElementById('f_title').value = lines[1];
 
   save();
-  closeTextImportModal();
+  closeSmartImportModal();
   toast('Resume text parsed into form! 🎉','ok');
 }
 
-// ====== FEATURE 1: JOB DESCRIPTION (JD) TAILORING & ATS OPTIMIZER ======
-function analyzeJD(){
-  var jd = document.getElementById('jdInput').value.trim();
-  var resBox = document.getElementById('jdAnalysisResult');
-  var scoreVal = document.getElementById('atsScoreVal');
-  var kwBox = document.getElementById('jdKeywords');
+// ====== JD TAILORING MODAL ======
+function openJdModal(){document.getElementById('jdModal').classList.add('open');}
+function closeJdModal(){document.getElementById('jdModal').classList.remove('open');}
 
-  if(!jd){
-    resBox.style.display = 'none';
-    scoreVal.textContent = '0%';
-    return;
-  }
+function analyzeModalJd(){
+  var jd = document.getElementById('modalJdInput').value.trim();
+  var resBox = document.getElementById('modalJdResult');
+  var scoreEl = document.getElementById('modalAtsScore');
+  var kwBox = document.getElementById('modalJdKws');
 
-  resBox.style.display = 'block';
+  if(!jd){resBox.style.display='none';scoreEl.textContent='ATS Match: 0%';return;}
+  resBox.style.display='block';
   var jdLower = jd.toLowerCase();
-
-  // Find matches in candidate data
   var state = getResumeState();
   var corpus = (JSON.stringify(state)).toLowerCase();
 
   var foundInJd = [];
   TECH_DICTIONARY.forEach(function(kw){
-    if(jdLower.includes(kw.toLowerCase())){
-      foundInJd.push(kw);
-    }
+    if(jdLower.includes(kw.toLowerCase())) foundInJd.push(kw);
   });
 
-  if(!foundInJd.length){
-    scoreVal.textContent = '85%';
-    kwBox.innerHTML = '<span class="kw-tag match">Relevant Experience</span><span class="kw-tag match">Communication</span>';
-    return;
-  }
-
-  var matched = [];
-  var missing = [];
+  if(!foundInJd.length){scoreEl.textContent='ATS Match: 85%';return;}
+  var matched = [], missing = [];
   foundInJd.forEach(function(kw){
     if(corpus.includes(kw.toLowerCase())) matched.push(kw);
     else missing.push(kw);
   });
 
   var score = Math.round((matched.length / foundInJd.length) * 100);
-  scoreVal.textContent = score + '%';
-  scoreVal.style.color = score > 75 ? 'var(--accent3)' : (score > 50 ? 'var(--warning)' : 'var(--danger)');
+  scoreEl.textContent = 'ATS Match: ' + score + '%';
 
   var html = '';
-  matched.forEach(function(m){html += '<span class="kw-tag match">✓ ' + eh(m) + '</span>';});
-  missing.forEach(function(m){html += '<span class="kw-tag missing">✕ ' + eh(m) + ' (Missing)</span>';});
+  matched.forEach(function(m){html += '<span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:var(--accent3);padding:2px 8px;border-radius:50px;font-size:0.75rem">✓ '+eh(m)+'</span>';});
+  missing.forEach(function(m){html += '<span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--danger);padding:2px 8px;border-radius:50px;font-size:0.75rem">✕ '+eh(m)+'</span>';});
   kwBox.innerHTML = html;
 }
 
-function clearJD(){
-  document.getElementById('jdInput').value = '';
-  analyzeJD();
-}
-
-function optimizeForJD(){
-  var jd = document.getElementById('jdInput').value.trim();
+function optimizeFromJdModal(){
+  var jd = document.getElementById('modalJdInput').value.trim();
   if(!jd){toast('Paste a Job Description first','err');return;}
-
   var jdLower = jd.toLowerCase();
-  var missingKws = [];
+
   TECH_DICTIONARY.forEach(function(kw){
     if(jdLower.includes(kw.toLowerCase()) && !skills.includes(kw)){
-      missingKws.push(kw);
-    }
-  });
-
-  // 1. Inject missing skills
-  var added = 0;
-  missingKws.slice(0, 6).forEach(function(kw){
-    if(!skills.includes(kw)){
       skills.push(kw);
-      added++;
     }
   });
   rSkills();
 
-  // 2. Rewrite summary with STAR alignment
-  var name = gv('f_name') || 'Engineer';
   var title = gv('f_title') || 'Software Professional';
   var topKws = skills.slice(0, 4).join(', ');
   document.getElementById('f_summary').value = 
-    'Results-driven and innovative ' + title + ' with deep technical expertise in ' + topKws + '. ' +
-    'Demonstrated track record of delivering high-impact scalable architectures, optimizing systems for performance, and collaborating effectively across cross-functional engineering teams to drive business results.';
+    'Results-driven ' + title + ' with deep technical expertise in ' + topKws + '. ' +
+    'Demonstrated track record of delivering scalable architectures, optimizing systems for performance, and collaborating effectively across engineering teams to drive business impact.';
 
-  // 3. Rewrite Experience Bullets with STAR format
-  xList.forEach(function(id, idx){
+  xList.forEach(function(id){
     var bodyEl = document.getElementById('xb_' + id);
     if(bodyEl){
       var current = bodyEl.value.trim();
-      var role = gv('xt_' + id) || 'Engineering role';
       var lines = current.split('\n').filter(function(l){return l.trim();});
-      
-      var verbs = ["Spearheaded architecture of", "Engineered and optimized", "Collaborated across teams to deploy", "Automated workflows for"];
       var starLines = [];
       if(lines.length >= 2){
         lines.forEach(function(l){
@@ -1057,8 +992,8 @@ function optimizeForJD(){
   });
 
   save();
-  analyzeJD();
-  toast('Resume optimized with STAR bullets & ATS keywords! 🎯','ok');
+  closeJdModal();
+  toast('Resume optimized with STAR methodology! 🎯','ok');
 }
 
 // ====== GENERATE RESUME & PORTFOLIO ======
@@ -1084,54 +1019,48 @@ function gen(){
         buildP(d);
         calcScore(d);
         pg('rp');
-        toast('Resume & Portfolio generated! 🎉','ok');
+        toast('Resume generated! 🎉','ok');
       }, 500);
     }
   }, 450);
 }
 
-// ====== BUILD RESUME OUTPUT ======
+// ====== BUILD RESUME ======
 function buildR(d){
   var p=d.p,t=tmpl;
   var h='<div class="r-hdr"><div class="r-name">'+eh(p.name)+'</div><div class="r-title">'+eh(p.title)+'</div><div class="r-contact">'
     +(p.email?'<span>✉ '+eh(p.email)+'</span>':'')+(p.phone?'<span>📞 '+eh(p.phone)+'</span>':'')+(p.loc?'<span>📍 '+eh(p.loc)+'</span>':'')+(p.li?'<span>🔗 '+eh(p.li)+'</span>':'')+(p.gh?'<span>💻 '+eh(p.gh)+'</span>':'')
     +'</div></div>';
-  if(p.sum)h+='<div class="r-sec">Professional Summary</div><p style="font-size:12px;color:#444;line-height:1.6">'+eh(p.sum)+'</p>';
+  if(p.sum)h+='<div class="r-sec">Summary</div><p style="font-size:12px;color:#444;line-height:1.6">'+eh(p.sum)+'</p>';
   var edu=d.edu||[];
   if(edu.length&&edu[0].deg){h+='<div class="r-sec">Education</div>';edu.forEach(function(e){if(!e.deg)return;h+='<div class="ent"><div class="ent-hdr"><div><div class="ent-t">'+eh(e.deg)+'</div><div class="ent-s">'+eh(e.inst)+(e.loc?' &bull; '+eh(e.loc):'')+'</div></div><div class="ent-d">'+eh(e.start)+(e.end?' &ndash; '+eh(e.end):'')+'</div></div>'+(e.gpa?'<div class="ent-b">GPA: '+eh(e.gpa)+'</div>':'')+(e.body?'<div class="ent-b">'+buls(e.body)+'</div>':'')+'</div>';});}
   var exp=d.exp||[];
   if(exp.length&&exp[0].title){h+='<div class="r-sec">Work Experience</div>';exp.forEach(function(e){if(!e.title)return;h+='<div class="ent"><div class="ent-hdr"><div><div class="ent-t">'+eh(e.title)+(e.type&&e.type!=='Full-time'?' <span style="font-size:10px;color:#888">('+eh(e.type)+')</span>':'')+'</div><div class="ent-s">'+eh(e.co)+(e.loc?' &bull; '+eh(e.loc):'')+'</div></div><div class="ent-d">'+eh(e.start)+(e.end?' &ndash; '+eh(e.end):'')+'</div></div>'+(e.body?'<div class="ent-b">'+buls(e.body)+'</div>':'')+'</div>';});}
-  if(d.sk&&d.sk.length){h+='<div class="r-sec">Technical Skills</div><div>'+d.sk.map(function(s){return'<span class="sk">'+eh(s)+'</span>';}).join('')+'</div>';}
+  if(d.sk&&d.sk.length){h+='<div class="r-sec">Skills</div><div>'+d.sk.map(function(s){return'<span class="sk">'+eh(s)+'</span>';}).join('')+'</div>';}
   var proj=d.proj||[];
-  if(proj.length&&proj[0].name){h+='<div class="r-sec">Featured Projects</div>';proj.forEach(function(e){if(!e.name)return;h+='<div class="ent"><div class="ent-hdr"><div><div class="ent-t">'+eh(e.name)+'</div>'+(e.tech?'<div class="ent-s">'+eh(e.tech)+'</div>':'')+'</div>'+(e.dur?'<div class="ent-d">'+eh(e.dur)+'</div>':'')+'</div>'+(e.body?'<div class="ent-b">'+buls(e.body)+'</div>':'')+(e.url?'<div class="ent-b" style="color:#1e40af;font-size:11px">'+eh(e.url)+'</div>':'')+'</div>';});}
+  if(proj.length&&proj[0].name){h+='<div class="r-sec">Projects</div>';proj.forEach(function(e){if(!e.name)return;h+='<div class="ent"><div class="ent-hdr"><div><div class="ent-t">'+eh(e.name)+'</div>'+(e.tech?'<div class="ent-s">'+eh(e.tech)+'</div>':'')+'</div>'+(e.dur?'<div class="ent-d">'+eh(e.dur)+'</div>':'')+'</div>'+(e.body?'<div class="ent-b">'+buls(e.body)+'</div>':'')+(e.url?'<div class="ent-b" style="color:#1e40af;font-size:11px">'+eh(e.url)+'</div>':'')+'</div>';});}
   var cert=d.cert||[];
   if(cert.length&&cert[0].name){h+='<div class="r-sec">Certifications</div>';cert.forEach(function(e){if(!e.name)return;h+='<div class="ent"><div class="ent-hdr"><div><div class="ent-t">'+eh(e.name)+'</div>'+(e.org?'<div class="ent-s">'+eh(e.org)+'</div>':'')+(e.cid?'<div class="ent-s" style="font-size:10px">ID: '+eh(e.cid)+'</div>':'')+'</div>'+(e.date?'<div class="ent-d">'+eh(e.date)+'</div>':'')+'</div></div>';});}
-  if(d.ach)h+='<div class="r-sec">Achievements &amp; Awards</div><div class="ent-b">'+buls(d.ach)+'</div>';
+  if(d.ach)h+='<div class="r-sec">Achievements</div><div class="ent-b">'+buls(d.ach)+'</div>';
   if(d.lang)h+='<div class="r-sec">Languages</div><p style="font-size:12px">'+eh(d.lang)+'</p>';
-  if(d.vol)h+='<div class="r-sec">Volunteer &amp; Open Source</div><div class="ent-b">'+buls(d.vol)+'</div>';
+  if(d.vol)h+='<div class="r-sec">Volunteer</div><div class="ent-b">'+buls(d.vol)+'</div>';
   var out=document.getElementById('resume-output');out.className='tmpl-'+t;out.innerHTML=h;
 }
 
-// ====== BUILD PORTFOLIO OUTPUT ======
+// ====== BUILD PORTFOLIO ======
 function buildP(d){
   var p=d.p;
   var h='<div class="p-hero"><div class="p-name">'+eh(p.name)+'</div><div class="p-role">'+eh(p.title)+'</div>'+(p.sum?'<div class="p-bio">'+eh(p.sum)+'</div>':'')+'</div>';
-  if(d.sk&&d.sk.length)h+='<div class="p-sec"><h3>⚡ Technical Skills</h3><div class="p-chips">'+d.sk.map(function(s){return'<div class="p-chip">'+eh(s)+'</div>';}).join('')+'</div></div>';
+  if(d.sk&&d.sk.length)h+='<div class="p-sec"><h3>Skills</h3><div class="p-chips">'+d.sk.map(function(s){return'<div class="p-chip">'+eh(s)+'</div>';}).join('')+'</div></div>';
   var exp=d.exp||[];
-  if(exp.length&&exp[0].title){h+='<div class="p-sec"><h3>💼 Work Experience</h3>';exp.forEach(function(e){if(!e.title)return;h+='<div class="p-exp"><div class="p-exp-hdr"><div class="p-exp-t">'+eh(e.title)+'</div><div class="p-exp-d">'+eh(e.start)+(e.end?' &ndash; '+eh(e.end):'')+'</div></div><div class="p-exp-c">'+eh(e.co)+(e.loc?' &bull; '+eh(e.loc):'')+'</div>'+(e.body?'<div class="p-exp-b">'+eh(e.body.replace(/\n/g,'<br>'))+'</div>':'')+'</div>';});h+='</div>';}
+  if(exp.length&&exp[0].title){h+='<div class="p-sec"><h3>Experience</h3>';exp.forEach(function(e){if(!e.title)return;h+='<div class="p-exp"><div class="p-exp-hdr"><div class="p-exp-t">'+eh(e.title)+'</div><div class="p-exp-d">'+eh(e.start)+(e.end?' &ndash; '+eh(e.end):'')+'</div></div><div class="p-exp-c">'+eh(e.co)+'</div>'+(e.body?'<div class="p-exp-b">'+eh(e.body.substring(0,180))+'</div>':'')+'</div>';});h+='</div>';}
   var proj=d.proj||[];
-  if(proj.length&&proj[0].name){h+='<div class="p-sec"><h3>🚀 Featured Projects</h3>';proj.forEach(function(e){if(!e.name)return;h+='<div class="p-proj"><h4>'+eh(e.name)+(e.tech?' <span style="font-weight:400;color:#64748b;font-size:0.85rem">— '+eh(e.tech)+'</span>':'')+'</h4>'+(e.body?'<p>'+eh(e.body.replace(/\n/g,'<br>'))+'</p>':'')+(e.url?'<a href="https://'+eh(e.url.replace("https://",""))+'" target="_blank" style="color:var(--accent);font-size:0.85rem;display:inline-block;margin-top:6px">'+eh(e.url)+'</a>':'')+'</div>';});h+='</div>';}
-  h+='<div class="p-sec"><h3>📬 Contact &amp; Connect</h3><div class="p-contacts">'
-    +(p.email?'<div class="p-ct"><span>Email</span>'+eh(p.email)+'</div>':'')
-    +(p.phone?'<div class="p-ct"><span>Phone</span>'+eh(p.phone)+'</div>':'')
-    +(p.loc?'<div class="p-ct"><span>Location</span>'+eh(p.loc)+'</div>':'')
-    +(p.li?'<div class="p-ct"><span>LinkedIn</span><a href="https://'+eh(p.li.replace("https://",""))+'" target="_blank" style="color:var(--accent)">'+eh(p.li)+'</a></div>':'')
-    +(p.gh?'<div class="p-ct"><span>GitHub</span><a href="https://'+eh(p.gh.replace("https://",""))+'" target="_blank" style="color:var(--accent)">'+eh(p.gh)+'</a></div>':'')
-    +'</div></div>';
+  if(proj.length&&proj[0].name){h+='<div class="p-sec"><h3>Projects</h3>';proj.forEach(function(e){if(!e.name)return;h+='<div class="p-proj"><h4>'+eh(e.name)+(e.tech?' <span style="font-weight:400;color:#64748b;font-size:0.8rem">'+eh(e.tech)+'</span>':'')+'</h4>'+(e.body?'<p>'+eh(e.body.substring(0,180))+'</p>':'')+(e.url?'<a href="'+eh(e.url)+'" style="color:#00d4ff;font-size:0.8rem">'+eh(e.url)+'</a>':'')+'</div>';});h+='</div>';}
+  h+='<div class="p-sec"><h3>Contact</h3><div class="p-contacts">'+(p.email?'<div class="p-ct"><span>Email</span>'+eh(p.email)+'</div>':'')+(p.phone?'<div class="p-ct"><span>Phone</span>'+eh(p.phone)+'</div>':'')+(p.loc?'<div class="p-ct"><span>Location</span>'+eh(p.loc)+'</div>':'')+(p.li?'<div class="p-ct"><span>LinkedIn</span>'+eh(p.li)+'</div>':'')+(p.gh?'<div class="p-ct"><span>GitHub</span>'+eh(p.gh)+'</div>':'')+'</div></div>';
   document.getElementById('portfolio-output').innerHTML=h;
 }
 
-// ====== CALCULATE OVERALL RESUME SCORE ======
+// ====== CALCULATE SCORE ======
 function calcScore(d){
   var p=d.p;
   var sc={Profile:0,Experience:0,Skills:0,Projects:0,Education:0};
@@ -1152,7 +1081,7 @@ function calcScore(d){
   if(!p.li)tips.push({t:'Add LinkedIn',b:'Recruiters check LinkedIn 75% of the time. Add your profile URL.'});
   if(!p.sum)tips.push({t:'Write a Summary',b:'A strong summary is the first thing recruiters read!'});
   if(sc.Projects<40)tips.push({t:'Showcase Projects',b:'Add 2-3 projects to demonstrate hands-on skills.'});
-  if(!tips.length)tips.push({t:'Excellent Work!',b:'Your resume looks comprehensive and ATS ready!'});
+  if(!tips.length)tips.push({t:'Excellent Work!',b:'Your resume looks comprehensive. Keep updating with new achievements!'});
   document.getElementById('aiTips').innerHTML=tips.map(function(tip){return'<div class="ai-tip"><p><strong>'+tip.t+':</strong> '+tip.b+'</p></div>';}).join('');
 }
 
@@ -1165,13 +1094,11 @@ function swTab(tab,el){
   if(tab==='res') document.getElementById('portChatWindow').style.display = 'none';
 }
 
-// ====== FEATURE 3: FLOATING AI RECRUITER CHATBOT WIDGET ======
+// ====== RECRUITER CHATBOT ======
 function togglePortfolioChat(){
   var w = document.getElementById('portChatWindow');
   w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
-  if(w.style.display === 'flex'){
-    document.getElementById('rChatInput').focus();
-  }
+  if(w.style.display === 'flex'){document.getElementById('rChatInput').focus();}
 }
 
 function askRChat(q){
@@ -1211,7 +1138,7 @@ function generateRecruiterAnswer(q){
   var edu = state.edu || [];
 
   if(ql.includes('skill') || ql.includes('tech') || ql.includes('know') || ql.includes('stack')){
-    return '<strong>' + (p.name || 'The candidate') + '</strong> is proficient in: <strong>' + (sk.join(', ') || 'modern engineering technologies') + '</strong>.';
+    return '<strong>' + (p.name || 'The candidate') + '</strong> is proficient in: <strong>' + (sk.join(', ') || 'various technologies') + '</strong>.';
   }
   if(ql.includes('experience') || ql.includes('work') || ql.includes('history') || ql.includes('company')){
     if(!exp.length) return p.name + ' has broad experience across engineering disciplines.';
@@ -1233,22 +1160,21 @@ function generateRecruiterAnswer(q){
     return 'You can contact <strong>' + (p.name || 'the candidate') + '</strong> directly:<br>📧 Email: ' + (p.email || 'N/A') + '<br>📞 Phone: ' + (p.phone || 'N/A') + '<br>🔗 LinkedIn: ' + (p.li || 'N/A');
   }
   if(ql.includes('education') || ql.includes('college') || ql.includes('degree')){
-    if(!edu.length) return p.name + ' has relevant academic training and degrees.';
+    if(!edu.length) return p.name + ' has relevant academic degrees.';
     var edRes = '<strong>Education:</strong><br>';
     edu.forEach(function(e){
       if(e.deg) edRes += '• ' + eh(e.deg) + ' from ' + eh(e.inst) + '<br>';
     });
     return edRes;
   }
-  return p.name + ' is a ' + (p.title || 'specialist') + ' proficient in ' + sk.slice(0, 4).join(', ') + '. Summary: "' + (p.sum || 'Looking for exciting engineering opportunities.') + '"';
+  return p.name + ' is a ' + (p.title || 'specialist') + ' proficient in ' + sk.slice(0, 4).join(', ') + '. Summary: "' + (p.sum || 'Looking for exciting opportunities.') + '"';
 }
 
-// ====== FEATURE 2: 1-CLICK LIVE WEB HOSTING & PORTABLE STATE URL ======
+// ====== 1-CLICK LIVE SHARE & HOSTING ======
 async function publishLivePortfolio(){
   var state = getResumeState();
   if(!state.p.name){toast('Please generate your resume first','err');return;}
 
-  // 1. Create portable compressed hash URL (Works 100% offline & GitHub Pages)
   var jsonStr = JSON.stringify(state);
   var base64Data = btoa(unescape(encodeURIComponent(jsonStr)));
   
@@ -1257,7 +1183,6 @@ async function publishLivePortfolio(){
   var portableUrl = origin + pathname + '#p=' + base64Data;
   var liveUrl = portableUrl;
 
-  // 2. Try publishing to backend API if available
   try {
     var res = await fetch('/api/publish', {
       method: 'POST',
@@ -1270,43 +1195,33 @@ async function publishLivePortfolio(){
     }
   } catch(e){}
 
-  // Show in Modal
   document.getElementById('shareUrlInput').value = liveUrl;
   document.getElementById('openLiveLinkBtn').href = liveUrl;
-  
-  // Render clean SVG QR Code
   generateSvgQr(liveUrl, document.getElementById('qrContainer'));
-
   document.getElementById('shareModal').classList.add('open');
-  toast('Live portfolio published & ready to share! 🚀','ok');
+  toast('Live portfolio link generated! 🚀','ok');
 }
 
-function closeShareModal(){
-  document.getElementById('shareModal').classList.remove('open');
-}
-
+function closeShareModal(){document.getElementById('shareModal').classList.remove('open');}
 function copyShareUrl(){
   var input = document.getElementById('shareUrlInput');
   input.select();
   input.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(input.value);
-  toast('Live link copied to clipboard! 📋','ok');
+  toast('Link copied to clipboard! 📋','ok');
 }
 
-// Simple deterministic SVG QR placeholder generator
 function generateSvgQr(url, container){
-  var size = 130;
+  var size = 120;
   var hash = 0;
   for(var i=0;i<url.length;i++){hash = ((hash << 5) - hash) + url.charCodeAt(i); hash |= 0;}
   
   var svg = '<svg width="'+size+'" height="'+size+'" viewBox="0 0 25 25" fill="#000">';
   svg += '<rect width="25" height="25" fill="#fff"/>';
-  // Standard 3 finder corners
   svg += '<rect x="1" y="1" width="7" height="7" fill="#000"/><rect x="2" y="2" width="5" height="5" fill="#fff"/><rect x="3" y="3" width="3" height="3" fill="#000"/>';
   svg += '<rect x="17" y="1" width="7" height="7" fill="#000"/><rect x="18" y="2" width="5" height="5" fill="#fff"/><rect x="19" y="3" width="3" height="3" fill="#000"/>';
   svg += '<rect x="1" y="17" width="7" height="7" fill="#000"/><rect x="2" y="18" width="5" height="5" fill="#fff"/><rect x="3" y="19" width="3" height="3" fill="#000"/>';
   
-  // Data dots
   for(var r=0; r<25; r++){
     for(var c=0; c<25; c++){
       if((r<9 && c<9) || (r<9 && c>15) || (r>15 && c<9)) continue;
@@ -1319,7 +1234,6 @@ function generateSvgQr(url, container){
   container.innerHTML = svg;
 }
 
-// Check for live share payload on URL hash (#p=...) on page load
 function checkUrlPayload(){
   var hash = window.location.hash;
   if(hash && hash.startsWith('#p=')){
@@ -1341,7 +1255,7 @@ function checkUrlPayload(){
 
 // ====== PDF DOWNLOAD ======
 function dlPDF(){
-  toast('Generating print-ready PDF...','ok');
+  toast('Generating PDF...','ok');
   try{
     var jsPDF = window.jspdf.jsPDF;
     var el = document.getElementById('resume-output');
@@ -1374,7 +1288,7 @@ function openPrint(){
   toast('Use Ctrl+P to save PDF','ok');
 }
 
-// ====== STANDALONE PORTFOLIO HTML EXPORT WITH EMBEDDED AI CHATBOT ======
+// ====== SAVE PORTFOLIO HTML (SAFE EMBEDDING) ======
 function dlPort(){
   var raw = localStorage.getItem('ar3');
   if(!raw){toast('Generate resume first','err');return;}
@@ -1383,103 +1297,7 @@ function dlPort(){
   var portHtml = document.getElementById('portfolio-output').innerHTML;
   var embeddedJson = JSON.stringify(d).replace(/</g,'\\u003c').replace(/>/g,'\\u003e');
 
-  var full = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${eh(p.name)} — Live Portfolio</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1c2535;--border:#1e3a5f;--accent:#00d4ff;--accent2:#7c3aed;--gradient:linear-gradient(135deg,#00d4ff,#7c3aed);--text:#e2e8f0;--muted:#64748b}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
-.container{max-width:920px;margin:0 auto;padding:60px 24px 100px}
-.p-hero{text-align:center;padding:40px 0 20px}
-.p-name{font-size:3rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.p-role{color:var(--muted);margin-top:8px;font-size:1.15rem}
-.p-bio{max-width:600px;margin:20px auto 0;color:#94a3b8;line-height:1.7;font-size:1rem}
-.p-sec{margin:44px 0}
-.p-sec h3{font-size:1.2rem;font-weight:800;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:20px}
-.p-chips{display:flex;flex-wrap:wrap;gap:10px}
-.p-chip{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:var(--accent);padding:8px 20px;border-radius:50px;font-size:0.88rem;font-weight:600}
-.p-proj{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px}
-.p-proj h4{font-weight:700;margin-bottom:6px;font-size:1.1rem}
-.p-proj p{color:#94a3b8;font-size:0.9rem;line-height:1.6}
-.p-exp{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-.p-exp:last-child{border-bottom:none}
-.p-exp-hdr{display:flex;justify-content:space-between;margin-bottom:4px}
-.p-exp-t{font-weight:700;font-size:1.05rem}
-.p-exp-d{color:var(--muted);font-size:0.85rem}
-.p-exp-c{color:var(--accent);font-size:0.9rem;margin-bottom:4px}
-.p-exp-b{color:#94a3b8;font-size:0.9rem;line-height:1.6}
-.p-contacts{display:flex;gap:14px;flex-wrap:wrap}
-.p-ct{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:0.9rem}
-.p-ct span{color:var(--accent);font-weight:600;display:block;font-size:0.75rem;margin-bottom:2px}
-footer{text-align:center;padding:40px 0;color:var(--muted);font-size:0.8rem;border-top:1px solid var(--border)}
-
-/* CHATBOT */
-#aiChatBtn{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--gradient);color:#fff;border:none;border-radius:50px;padding:12px 22px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(0,212,255,0.3)}
-#aiChatPanel{position:fixed;bottom:80px;right:24px;z-index:1000;width:360px;max-width:calc(100vw - 32px);height:480px;background:#111827;border:1px solid var(--border);border-radius:18px;box-shadow:0 16px 50px rgba(0,0,0,0.6);display:none;flex-direction:column;overflow:hidden}
-.chat-h{background:linear-gradient(135deg,#1e3a5f,#111827);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);color:#fff;font-weight:700;font-size:0.95rem}
-.chat-b{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:0.85rem}
-.cm{padding:10px 14px;border-radius:14px;max-width:85%;line-height:1.4}
-.cm.b{background:var(--surface2);border:1px solid var(--border);align-self:flex-start}
-.cm.u{background:var(--gradient);color:#fff;align-self:flex-end}
-.cc-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.cc-chip{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);color:var(--accent);padding:3px 8px;border-radius:50px;font-size:0.72rem;cursor:pointer}
-.chat-f{padding:10px;background:var(--surface2);border-top:1px solid var(--border);display:flex;gap:6px}
-.chat-in{flex:1;background:#111827;border:1px solid var(--border);border-radius:50px;padding:6px 14px;color:#fff;font-size:0.85rem;outline:none}
-.chat-btn{background:var(--accent);border:none;border-radius:50%;width:32px;height:32px;font-weight:700;cursor:pointer}
-</style>
-</head>
-<body>
-<div class="container">${portHtml}</div>
-<footer>Built with AI Resume &amp; Portfolio Builder v3.0</footer>
-
-<button id="aiChatBtn" onclick="toggleChat()">💬 Ask AI Recruiter</button>
-<div id="aiChatPanel">
-  <div class="chat-h"><span>🤖 AI Recruiter Assistant</span><button style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:1.1rem" onclick="toggleChat()">✕</button></div>
-  <div class="chat-b" id="cmList">
-    <div class="cm b">Hello! I am ${eh(p.name)}'s AI Recruiter Assistant. Ask me about their technical skills, past experience, or projects!
-      <div class="cc-chips">
-        <span class="cc-chip" onclick="askC('What are their top skills?')">⚡ Skills</span>
-        <span class="cc-chip" onclick="askC('Tell me about their experience')">💼 Experience</span>
-        <span class="cc-chip" onclick="askC('What projects have they built?')">🚀 Projects</span>
-        <span class="cc-chip" onclick="askC('How can I contact them?')">📬 Contact</span>
-      </div>
-    </div>
-  </div>
-  <div class="chat-f"><input type="text" class="chat-in" id="cIn" placeholder="Ask about candidate..." onkeydown="if(event.key==='Enter')sendC()"><button class="chat-btn" onclick="sendC()">➤</button></div>
-</div>
-
-<script>
-const C = ${embeddedJson};
-function toggleChat(){var p=document.getElementById('aiChatPanel');p.style.display=p.style.display==='flex'?'none':'flex';if(p.style.display==='flex')document.getElementById('cIn').focus();}
-function askC(q){document.getElementById('cIn').value=q;sendC();}
-function sendC(){
-  var inEl=document.getElementById('cIn'),txt=inEl.value.trim();if(!txt)return;inEl.value='';
-  addM(txt,'u');
-  setTimeout(function(){
-    var ql=txt.toLowerCase(),p=C.p||{},sk=C.sk||[],exp=C.exp||[],proj=C.proj||[],res='';
-    if(ql.includes('skill')||ql.includes('tech')||ql.includes('stack')) res='<strong>'+p.name+'</strong> knows: '+sk.join(', ');
-    else if(ql.includes('experience')||ql.includes('work')) {
-      res='<strong>Experience:</strong><br>';
-      exp.forEach(e=>{if(e.title)res+='• '+e.title+' at '+e.co+' ('+(e.start||'')+' - '+(e.end||'Present')+')<br>';});
-    } else if(ql.includes('project')||ql.includes('built')) {
-      res='<strong>Projects:</strong><br>';
-      proj.forEach(pr=>{if(pr.name)res+='• '+pr.name+' ('+(pr.tech||'')+')<br>';});
-    } else if(ql.includes('contact')||ql.includes('email')||ql.includes('phone')) {
-      res='Reach <strong>'+p.name+'</strong> at: '+p.email+' | '+p.phone+' | '+p.li;
-    } else {
-      res=p.name+' is a '+p.title+' with expertise in '+sk.slice(0,4).join(', ')+'. Summary: "'+(p.sum||'')+'"';
-    }
-    addM(res,'b');
-  },350);
-}
-function addM(t,s){var b=document.getElementById('cmList'),d=document.createElement('div');d.className='cm '+s;d.innerHTML=t;b.appendChild(d);b.scrollTop=b.scrollHeight;}
-</script>
-</body>
-</html>`;
+  var full = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1.0">\n<title>' + eh(p.name) + ' - Portfolio</title>\n<style>\n*{box-sizing:border-box;margin:0;padding:0}body{font-family:Segoe UI,system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh}.container{max-width:900px;margin:0 auto;padding:60px 24px}.p-hero{text-align:center;padding:60px 0 40px}.p-name{font-size:3rem;font-weight:800;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.p-role{color:#64748b;margin-top:8px;font-size:1.1rem}.p-bio{max-width:600px;margin:20px auto 0;color:#94a3b8;line-height:1.7}.p-sec{margin:50px 0}.p-sec h3{font-size:1.15rem;font-weight:800;color:#00d4ff;border-bottom:1px solid #1e3a5f;padding-bottom:12px;margin-bottom:24px}.p-chips{display:flex;flex-wrap:wrap;gap:12px}.p-chip{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:#00d4ff;padding:8px 20px;border-radius:50px;font-size:0.9rem;font-weight:600}.p-proj{background:rgba(255,255,255,0.03);border:1px solid #1e3a5f;border-radius:14px;padding:24px;margin-bottom:16px}.p-proj h4{font-weight:700;margin-bottom:8px}.p-proj p{color:#64748b;font-size:0.9rem;line-height:1.6}.p-exp{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #1e3a5f}.p-exp:last-child{border-bottom:none}.p-exp-hdr{display:flex;justify-content:space-between;margin-bottom:4px}.p-exp-t{font-weight:700}.p-exp-d{color:#64748b;font-size:0.875rem}.p-exp-c{color:#00d4ff;font-size:0.875rem;margin-bottom:4px}.p-exp-b{color:#94a3b8;font-size:0.875rem;line-height:1.6}.p-contacts{display:flex;gap:14px;flex-wrap:wrap}.p-ct{background:rgba(255,255,255,0.04);border:1px solid #1e3a5f;border-radius:10px;padding:12px 20px;font-size:0.9rem}.p-ct span{color:#00d4ff;font-weight:600;display:block;font-size:0.75rem;margin-bottom:2px}footer{text-align:center;padding:40px 0;color:#1e3a5f;font-size:0.8rem}\n</style>\n</head>\n<body>\n<div class="container">' + portHtml + '</div>\n<footer>Built with AI Resume &amp; Portfolio Builder</footer>\n</body>\n</html>';
 
   var blob = new Blob([full],{type:'text/html'});
   var url = URL.createObjectURL(blob);
@@ -1488,7 +1306,7 @@ function addM(t,s){var b=document.getElementById('cmList'),d=document.createElem
   a.download = (p.name||'Portfolio').replace(/\s+/g,'_')+'_Portfolio.html';
   a.click();
   URL.revokeObjectURL(url);
-  toast('Portfolio HTML saved with AI Chatbot! 🌐','ok');
+  toast('Portfolio HTML saved! 🌐','ok');
 }
 
 // ====== PRESET SAMPLE PROFILES ======
@@ -1503,13 +1321,13 @@ var SAMPLE_PROFILES = {
       li: "linkedin.com/in/alexrivera-ai",
       gh: "github.com/alexrivera-dev",
       web: "alexrivera.tech",
-      sum: "Innovative Senior AI & Full-Stack Engineer with 5+ years of experience architecting LLM-powered applications and scalable microservices. Proven track record reducing API latency by 45% and leading cross-functional squads to ship enterprise platforms serving 500k+ users."
+      sum: "Innovative Senior AI & Full-Stack Engineer with 5+ years of experience architecting LLM-powered applications and scalable microservices. Proven track record reducing API latency by 45% and leading cross-functional teams to ship enterprise products serving 500k+ active users."
     },
     sk: ["Python", "TypeScript", "React", "Next.js", "FastAPI", "PyTorch", "LangChain", "Docker", "Kubernetes", "PostgreSQL", "Redis", "AWS", "CI/CD", "GraphQL"],
     tmpl: 1,
     ach: "• 1st Place Winner - Global AI Agents Hackathon 2024 (Top among 1,200 teams)\n• Published author on 'Low-Latency LLM Serving' in IEEE Software\n• Awarded Employee of the Year 2023 for leading core platform migration",
     lang: "English (Native), Spanish (Fluent), German (Conversational)",
-    vol: "• Technical Mentor at CodeForGood teaching web development to youth\n• Open-source maintainer with 1,500+ GitHub stars across generative AI tooling",
+    vol: "• Technical Mentor at CodeForGood teaching web development to underrepresented youth\n• Open-source maintainer with 1,500+ GitHub stars across generative AI tooling",
     int: "Autonomous Robotics, High-Performance Distributed Systems, Rock Climbing",
     edu: [
       {
@@ -1519,7 +1337,7 @@ var SAMPLE_PROFILES = {
         end: "2021",
         gpa: "3.9 / 4.0",
         loc: "Stanford, CA",
-        body: "• Focus: Deep Learning, Natural Language Processing, Distributed Systems\n• Graduate Teaching Assistant for CS229 Machine Learning"
+        body: "• Focus: Deep Learning, Natural Language Processing, and Distributed Systems\n• Graduate Teaching Assistant for CS229 Machine Learning"
       },
       {
         deg: "Bachelor of Science in Software Engineering",
@@ -1539,7 +1357,7 @@ var SAMPLE_PROFILES = {
         end: "Present",
         loc: "San Francisco, CA",
         type: "Full-time",
-        body: "• Spearheaded multi-agent reasoning workflows, reducing document turnaround from 48 hours to 3 minutes.\n• Scaled real-time inference pipeline handling 12,000 requests/sec with 99.99% uptime.\n• Mentored a high-performing squad of 8 engineers across frontend, backend, and MLOps."
+        body: "• Architected multi-agent reasoning workflows reducing document processing turnaround from 48 hours to 3 minutes.\n• Scaled real-time inference pipeline handling 12,000 requests/sec with 99.99% uptime.\n• Mentored a high-performing engineering squad of 8 engineers across frontend, backend, and MLOps."
       },
       {
         title: "Senior Full-Stack Developer",
@@ -1548,7 +1366,7 @@ var SAMPLE_PROFILES = {
         end: "Dec 2021",
         loc: "San Jose, CA",
         type: "Full-time",
-        body: "• Rebuilt customer-facing SaaS portal using React, Next.js, and TypeScript, boosting engagement by 35%.\n• Designed RESTful and GraphQL microservices in FastAPI and PostgreSQL with Redis caching.\n• Implemented automated CI/CD deployment pipelines on AWS ECS, reducing release cycle time by 60%."
+        body: "• Rebuilt customer-facing SaaS portal using React, Next.js, and TypeScript, boosting user engagement by 35%.\n• Designed RESTful and GraphQL backend microservices in FastAPI and PostgreSQL with Redis caching.\n• Implemented automated CI/CD deployment pipelines on AWS ECS, reducing release cycle time by 60%."
       }
     ],
     proj: [
@@ -1557,7 +1375,7 @@ var SAMPLE_PROFILES = {
         tech: "Python, FastAPI, React, LangChain, OpenAI API",
         url: "github.com/alexrivera-dev/omni-agent",
         dur: "Jan 2024 - Present",
-        body: "• Built an autonomous multi-modal AI agent dashboard capable of executing complex code generation\n• Integrated vector database indexing with Milvus, enabling sub-50ms semantic search over 2M+ documents"
+        body: "• Built an autonomous multi-modal AI agent dashboard capable of executing complex code generation and file analysis\n• Integrated vector database indexing with Milvus, enabling sub-50ms semantic search over 2M+ enterprise documents"
       },
       {
         name: "Pulse Analytics Engine",
@@ -1751,7 +1569,7 @@ function loadSample(num) {
   toast('Sample profile for "' + s.p.name + '" loaded! ⚡','ok');
 }
 
-// ====== INITIALIZATION ======
+// ====== INIT ======
 window.addEventListener('load',function(){
   var raw = localStorage.getItem('ar3');
   if(raw){
@@ -1762,8 +1580,6 @@ window.addEventListener('load',function(){
   }
   document.addEventListener('input',function(){clearTimeout(window._t);window._t=setTimeout(save,800);});
   document.addEventListener('change',function(){clearTimeout(window._t);window._t=setTimeout(save,800);});
-  
-  // Check for live share payload on URL hash
   checkUrlPayload();
 });
 </script>
