@@ -59,6 +59,20 @@ async function apiGithubImport(username) {
   }
 }
 
+async function apiAtsTest(resumeText, jdText, resumeData = null) {
+  try {
+    const res = await fetch(`${API_BASE}/api/ats-test`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resume_text: resumeText, job_description: jdText, resume_data: resumeData })
+    });
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 async function apiHealth() {
   try {
     const res = await fetch(`${API_BASE}/health`);
@@ -73,6 +87,8 @@ window.ResumeAPI = {
   apiJdTailor,
   apiPublish,
   apiGithubImport,
+  apiAtsTest,
   apiHealth,
   API_BASE
 };
+

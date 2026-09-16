@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Resume &amp; Portfolio Builder</title>
+<title>AI Resume &amp; Portfolio Builder with ATS Tester</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -26,10 +26,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 @keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.6}90%{opacity:0.3}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,14,26,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(30,58,95,0.5)}
 .nav-logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer}
-.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .nav-btn{padding:8px 18px;border-radius:50px;border:none;cursor:pointer;font-size:0.875rem;font-weight:600;transition:var(--transition);text-decoration:none}
 .nav-btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
 .nav-btn.ghost:hover{color:var(--accent);border-color:var(--accent)}
+.nav-btn.ats-btn{background:rgba(245,158,11,0.1);color:var(--warning);border:1px solid rgba(245,158,11,0.3)}
+.nav-btn.ats-btn:hover{background:var(--warning);color:#000}
 .nav-btn.primary{background:var(--gradient);color:#fff}
 .nav-btn.primary:hover{opacity:0.85;transform:translateY(-1px)}
 .page{position:relative;z-index:1;min-height:100vh;display:none}
@@ -40,15 +42,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:calc(100vh - 80px);padding:60px 24px;gap:32px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:var(--accent);padding:6px 18px;border-radius:50px;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;animation:pulseGlow 2s ease-in-out infinite}
 @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.2)}50%{box-shadow:0 0 0 8px rgba(0,212,255,0)}}
-.hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;line-height:1.1;max-width:840px}
+.hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;line-height:1.1;max-width:860px}
 .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:600px;line-height:1.7}
+.hero p{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:620px;line-height:1.7}
 .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;font-size:0.95rem;font-weight:700;transition:var(--transition);text-decoration:none}
 .btn-primary{background:var(--gradient);color:#fff;box-shadow:0 8px 32px rgba(0,212,255,0.25)}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.4)}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-ats{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 8px 32px rgba(245,158,11,0.25)}
+.btn-ats:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(245,158,11,0.4)}
 .btn-publish{background:var(--gradient2);color:#fff;box-shadow:0 8px 32px rgba(16,185,129,0.25)}
 .btn-publish:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(16,185,129,0.4)}
 .hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center}
@@ -80,7 +84,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .step-content h3{font-size:1.15rem;font-weight:700;margin-bottom:6px}
 .step-content p{color:var(--muted);line-height:1.6}
 
-/* FORM & WIZARD */
+/* FORM PAGE & WIZARD */
 #fp{padding-top:80px;min-height:100vh}
 .form-container{max-width:880px;margin:0 auto;padding:40px 24px 80px}
 .form-header{margin-bottom:30px}
@@ -241,10 +245,74 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .act-dl:hover{opacity:0.85;transform:translateY(-1px)}
 .act-pub{background:var(--gradient2);color:#fff}
 .act-pub:hover{opacity:0.85;transform:translateY(-1px)}
+.act-ats{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+.act-ats:hover{opacity:0.85;transform:translateY(-1px)}
 .act-port{background:var(--surface2);color:var(--accent3);border:1px solid rgba(16,185,129,0.3)}
 .act-port:hover{background:rgba(16,185,129,0.1);color:#fff}
 .act-ed{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 .act-ed:hover{border-color:var(--accent);color:var(--accent)}
+
+/* DEDICATED ATS TESTING PAGE (#ats-page) */
+#ats-page{padding-top:80px;min-height:100vh}
+.ats-container{max-width:1100px;margin:0 auto;padding:40px 24px 100px}
+.ats-hero{text-align:center;margin-bottom:36px}
+.ats-hero h2{font-size:2.2rem;font-weight:800;background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.ats-hero p{color:var(--muted);max-width:650px;margin:0 auto;font-size:0.95rem;line-height:1.6}
+.ats-grid-inputs{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+@media(max-width:850px){.ats-grid-inputs{grid-template-columns:1fr}}
+.ats-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:14px}
+.ats-box-header{display:flex;justify-content:space-between;align-items:center}
+.ats-box-title{font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.ats-sample-chips{display:flex;gap:6px;flex-wrap:wrap}
+.sample-chip{padding:4px 10px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--warning);border-radius:50px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:var(--transition)}
+.sample-chip:hover{background:var(--warning);color:#000}
+.ats-resume-selector{display:flex;gap:12px;margin-bottom:8px}
+.ats-radio-label{display:flex;align-items:center;gap:6px;font-size:0.85rem;color:var(--text);cursor:pointer}
+.ats-active-resume-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.ats-active-name{font-weight:700;font-size:0.95rem;color:var(--accent)}
+.ats-active-role{font-size:0.8rem;color:var(--muted)}
+.btn-run-ats{width:100%;padding:16px;background:linear-gradient(135deg,#f59e0b,#ea580c);color:#fff;border:none;border-radius:50px;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(245,158,11,0.3);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-run-ats:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(245,158,11,0.5)}
+
+/* ATS AUDIT REPORT DASHBOARD */
+.ats-report{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-top:32px;display:none;animation:fadeInUp 0.4s ease}
+.ats-report-top{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:center;padding-bottom:28px;border-bottom:1px solid var(--border);margin-bottom:28px}
+@media(max-width:768px){.ats-report-top{grid-template-columns:1fr;text-align:center}}
+.ats-score-badge{text-align:center}
+.ats-big-circle{width:130px;height:130px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 35px rgba(245,158,11,0.25)}
+.ats-big-inner{width:104px;height:104px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.ats-big-num{font-size:2rem;font-weight:800;background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ats-score-disclaimer{font-size:0.72rem;color:var(--muted);margin-top:6px;line-height:1.4}
+.ats-factors-list{display:flex;flex-direction:column;gap:12px}
+.ats-factor-row{display:flex;align-items:center;gap:12px}
+.ats-factor-name{font-size:0.85rem;color:var(--text);font-weight:600;flex:1.5}
+.ats-factor-bar{flex:2;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.ats-factor-fill{height:100%;border-radius:4px;background:var(--gradient3);transition:width 0.8s ease}
+.ats-factor-pts{font-size:0.85rem;font-weight:700;color:var(--warning);width:50px;text-align:right}
+
+.ats-sections-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px}
+@media(max-width:800px){.ats-sections-grid{grid-template-columns:1fr}}
+.ats-card-sec{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px}
+.ats-card-sec h4{font-size:0.95rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kw-chips-wrap{display:flex;flex-wrap:wrap;gap:6px;max-height:160px;overflow-y:auto}
+.kw-chip{padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.kw-chip.matched{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:var(--accent3)}
+.kw-chip.missing{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
+.ethical-notice{font-size:0.72rem;color:var(--muted);margin-top:8px;line-height:1.4}
+
+.hazard-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:10px;margin-bottom:8px;font-size:0.82rem;line-height:1.5}
+.hazard-item.ok{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:#a7f3d0}
+.hazard-item.warn{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:#fde68a}
+.hazard-item.danger{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#fecaca}
+
+.rec-item{background:var(--surface2);border-radius:12px;padding:14px 18px;border-left:4px solid var(--warning);margin-bottom:10px}
+.rec-item.high{border-left-color:var(--danger)}
+.rec-item.med{border-left-color:var(--warning)}
+.rec-item.low{border-left-color:var(--accent)}
+.rec-badge{font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:50px;text-transform:uppercase;margin-right:6px}
+.rec-badge.high{background:rgba(239,68,68,0.2);color:var(--danger)}
+.rec-badge.med{background:rgba(245,158,11,0.2);color:var(--warning)}
+.rec-badge.low{background:rgba(0,212,255,0.2);color:var(--accent)}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
@@ -319,6 +387,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <button class="nav-btn ghost" onclick="pg('landing')">Home</button>
     <button class="nav-btn ghost" onclick="pg('fp')">Builder</button>
     <button class="nav-btn ghost" style="border-color:var(--accent3);color:var(--accent3)" onclick="loadSample(1)">⚡ Sample Profile</button>
+    <button class="nav-btn ats-btn" onclick="openAtsPage()">🧪 ATS Tester</button>
     <button class="nav-btn primary" onclick="pg('fp')">&#x1F680; Launch Builder</button>
   </div>
 </nav>
@@ -326,47 +395,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <!-- LANDING PAGE -->
 <div id="landing" class="page active">
   <section class="hero">
-    <div class="hero-badge">&#x2728; AI-Powered Resume Builder</div>
-    <h1>Build Your <span class="gradient-text">Dream Resume</span><br>in Minutes</h1>
-    <p>Create a professional resume and personal portfolio with AI. Fill in your details and let AI handle the rest.</p>
+    <div class="hero-badge">&#x2728; AI Resume &amp; Portfolio Builder with ATS Tester</div>
+    <h1>Build, Test &amp; <span class="gradient-text">Optimize Your Resume</span> for ATS Bots</h1>
+    <p>Complete AI resume builder with 4 modern templates, 1-click live web portfolio hosting, AI Recruiter Chatbot, and a dedicated ATS Compatibility Tester.</p>
     <div class="hero-cta">
       <button class="btn btn-primary" onclick="pg('fp')">&#x1F680; Start Building Free</button>
+      <button class="btn btn-ats" onclick="openAtsPage()">🧪 Test Resume Against ATS</button>
       <button class="btn btn-outline" onclick="loadSample(1)">⚡ Load Demo Profile</button>
-      <button class="btn btn-outline" onclick="document.getElementById('feats').scrollIntoView({behavior:'smooth'})">&#x2728; See Features</button>
     </div>
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">4</div><div class="stat-label">Templates</div></div>
+      <div class="stat"><div class="stat-num">ATS</div><div class="stat-label">Audit Engine</div></div>
       <div class="stat"><div class="stat-num">STAR</div><div class="stat-label">AI Rewriter</div></div>
-      <div class="stat"><div class="stat-num">PDF</div><div class="stat-label">Download</div></div>
       <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free &amp; Offline</div></div>
     </div>
   </section>
 
   <section class="features" id="feats">
     <div class="section-title">
-      <h2>Everything You Need to <span class="gradient-text">Stand Out</span></h2>
-      <p>Powerful features built for modern professionals</p>
+      <h2>Everything You Need to <span class="gradient-text">Get Hired</span></h2>
+      <p>State-of-the-art tools for software engineers and professionals</p>
     </div>
     <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon c5">&#x1F9EA;</div><h3>ATS Resume Tester</h3><p>Upload a job description and test your resume for keyword matches, missing skills, and formatting hazards.</p></div>
       <div class="feature-card"><div class="feature-icon c1">&#x1F4DD;</div><h3>Step-by-Step Form</h3><p>Guided wizard collects education, skills, projects, experience, and certifications effortlessly.</p></div>
-      <div class="feature-card"><div class="feature-icon c2">&#x1F916;</div><h3>AI Optimization</h3><p>Smart AI suggestions improve your resume score and make it ATS-friendly automatically.</p></div>
-      <div class="feature-card"><div class="feature-icon c3">&#x1F3A8;</div><h3>Multiple Templates</h3><p>Choose from 4 professional templates: Modern, Dark, Tech, and Classic styles.</p></div>
-      <div class="feature-card"><div class="feature-icon c4">&#x1F4C4;</div><h3>PDF Download</h3><p>Download your resume as a print-ready PDF instantly. No watermarks, completely free.</p></div>
-      <div class="feature-card"><div class="feature-icon c5">&#x1F310;</div><h3>Portfolio Generator</h3><p>Auto-generate a sleek personal portfolio webpage with About, Skills, Projects &amp; Contact.</p></div>
-      <div class="feature-card"><div class="feature-icon c6">&#x1F4BE;</div><h3>Auto-Save</h3><p>Data saved locally in your browser. Return anytime and continue where you left off.</p></div>
-    </div>
-  </section>
-
-  <section class="how-it-works">
-    <div class="section-title" style="padding-top:60px">
-      <h2>How It <span class="gradient-text">Works</span></h2>
-      <p>Build your resume in 4 simple steps</p>
-    </div>
-    <div class="steps" style="max-width:700px;margin:0 auto;padding:0 24px 60px">
-      <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Fill Your Information</h3><p>Enter your personal details, education, work experience, skills, and projects through our guided form.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Choose a Template</h3><p>Select from 4 professionally designed resume templates to match your style and industry.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-content"><h3>AI Optimization</h3><p>Our AI analyzes your content and provides suggestions to improve your resume score.</p></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Download &amp; Share</h3><p>Download as PDF or publish your live portfolio with embedded AI Recruiter Chatbot.</p></div></div>
+      <div class="feature-card"><div class="feature-icon c2">&#x1F916;</div><h3>AI Recruiter Assistant</h3><p>Floating chatbot embedded on your portfolio page answers recruiter questions dynamically.</p></div>
+      <div class="feature-card"><div class="feature-icon c3">&#x1F3A8;</div><h3>Multiple Templates</h3><p>Choose from 4 professional templates: Modern Blue, Dark Minimal, Green Tech, and Classic B&amp;W.</p></div>
+      <div class="feature-card"><div class="feature-icon c4">&#x1F4C4;</div><h3>Print-Ready PDF</h3><p>Download your resume as a print-ready PDF instantly without watermarks.</p></div>
+      <div class="feature-card"><div class="feature-icon c6">&#x1F310;</div><h3>1-Click Live Hosting</h3><p>Publish a live shareable URL with portable URL state and instant QR Code for recruiters.</p></div>
     </div>
   </section>
 </div>
@@ -376,9 +432,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <div class="form-container">
     <div class="form-header">
       <h2>&#x1F4CB; Build Your Resume</h2>
-      <p>Fill in your details below or load a pre-built sample profile to test instantly:</p>
+      <p>Fill in your details below, or load a pre-built sample profile to test instantly:</p>
       
-      <!-- QUICK SAMPLE PROFILE BUTTONS & SMART IMPORT -->
       <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center">
         <button class="btn" style="padding:8px 18px;font-size:0.82rem;background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff" onclick="loadSample(1)">⚡ Senior AI Engineer</button>
         <button class="btn" style="padding:8px 18px;font-size:0.82rem;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff" onclick="loadSample(2)">🎨 Product Designer</button>
@@ -387,7 +442,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       </div>
     </div>
 
-    <!-- STEP PROGRESS BAR -->
+    <!-- PROGRESS STEPS -->
     <div style="margin-bottom:32px">
       <div class="progress-steps" id="psteps">
         <div class="progress-step active" onclick="gts(0)"><div class="progress-step-dot">1</div><div class="progress-step-label">Personal</div></div>
@@ -426,7 +481,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="ai-box"><h4><span class="ai-badge">AI TIP</span>Education Section</h4><p>List most recent first. Include <strong>relevant coursework, honors, GPA (above 3.5)</strong>, and extracurriculars.</p></div>
     </div>
 
-    <!-- STEP 2: Experience (Includes JD Tailor Tool) -->
+    <!-- STEP 2: Experience -->
     <div class="form-step" id="step-2">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
         <h3 style="font-size:1.1rem">Work History</h3>
@@ -497,11 +552,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="result-header">
       <div>
         <h2>Your Resume is Ready! &#x1F389;</h2>
-        <p>Preview below, download PDF, or publish your live portfolio URL for recruiters.</p>
+        <p>Preview below, download PDF, test against ATS, or publish your live portfolio URL.</p>
       </div>
       <div class="result-actions">
         <button class="btn btn-outline" onclick="pg('fp')">&#x270F; Edit</button>
-        <button class="btn btn-publish" onclick="publishLivePortfolio()">🚀 Publish &amp; Get Live Portfolio URL</button>
+        <button class="btn btn-ats" onclick="openAtsPage()">🧪 Test with ATS Checker</button>
+        <button class="btn btn-publish" onclick="publishLivePortfolio()">🚀 Publish Live Portfolio</button>
         <button class="btn btn-primary" onclick="dlPDF()">&#x1F4E5; Download PDF</button>
       </div>
     </div>
@@ -559,6 +615,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
         <!-- QUICK ACTIONS -->
         <div class="s-card">
           <h3>&#x26A1; Quick Actions</h3>
+          <button class="act-btn act-ats" onclick="openAtsPage()">🧪 Run Full ATS Compatibility Audit</button>
           <button class="act-btn act-pub" onclick="publishLivePortfolio()">🚀 Publish &amp; Get Live Portfolio URL</button>
           <button class="act-btn act-dl" onclick="dlPDF()">&#x1F4E5; Download PDF Resume</button>
           <button class="act-btn act-port" onclick="dlPort()">&#x1F310; Save Standalone Portfolio HTML</button>
@@ -572,6 +629,142 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
           <h3>&#x1F4A1; AI Suggestions</h3>
           <div class="ai-tips" id="aiTips"></div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEDICATED ATS RESUME TESTING PAGE (#ats-page) -->
+<div id="ats-page" class="page">
+  <div class="ats-container">
+    <div class="ats-hero">
+      <h2>🎯 ATS Resume Compatibility Tester</h2>
+      <p>Compare your resume against any target Job Description to identify matched technical keywords, missing skills, and formatting hazards before applying.</p>
+    </div>
+
+    <div class="ats-grid-inputs">
+      <!-- BOX 1: JOB DESCRIPTION -->
+      <div class="ats-box">
+        <div class="ats-box-header">
+          <div class="ats-box-title">📋 1. Target Job Description</div>
+          <div class="ats-sample-chips">
+            <span class="sample-chip" onclick="loadSampleJd('ai')">⚡ AI Eng JD</span>
+            <span class="sample-chip" onclick="loadSampleJd('ux')">🎨 UX JD</span>
+            <span class="sample-chip" onclick="loadSampleJd('cloud')">☁️ Cloud JD</span>
+          </div>
+        </div>
+        <textarea class="form-textarea" id="atsJdInput" placeholder="Paste the complete target Job Description here (requirements, qualifications, responsibilities)..." style="min-height:160px"></textarea>
+      </div>
+
+      <!-- BOX 2: RESUME SELECTION -->
+      <div class="ats-box">
+        <div class="ats-box-header">
+          <div class="ats-box-title">📄 2. Resume to Test</div>
+        </div>
+        
+        <div class="ats-resume-selector">
+          <label class="ats-radio-label">
+            <input type="radio" name="atsResumeSource" value="active" id="atsSrcActive" checked onchange="toggleAtsSource()">
+            <span>Use Active Resume Profile</span>
+          </label>
+          <label class="ats-radio-label">
+            <input type="radio" name="atsResumeSource" value="custom" id="atsSrcCustom" onchange="toggleAtsSource()">
+            <span>Paste Custom Resume Text</span>
+          </label>
+        </div>
+
+        <!-- ACTIVE RESUME INFO -->
+        <div id="atsActiveResumeBox">
+          <div class="ats-active-resume-card">
+            <div>
+              <div class="ats-active-name" id="atsActiveName">Alex Rivera</div>
+              <div class="ats-active-role" id="atsActiveTitle">Senior AI &amp; Full-Stack Engineer</div>
+            </div>
+            <button class="btn btn-outline" style="padding:6px 14px;font-size:0.8rem" onclick="pg('fp')">Edit Profile</button>
+          </div>
+          <p style="font-size:0.8rem;color:var(--muted);margin-top:10px">The ATS tester will audit all sections, skills, work experience bullets, and education from your currently active builder state.</p>
+        </div>
+
+        <!-- CUSTOM RESUME TEXT (Hidden by default) -->
+        <div id="atsCustomResumeBox" style="display:none">
+          <textarea class="form-textarea" id="atsCustomTextInput" placeholder="Paste custom resume text here..." style="min-height:130px"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTON -->
+    <button class="btn-run-ats" onclick="runAtsCompatibilityTest()">
+      🔍 Run Deep ATS Compatibility Audit
+    </button>
+
+    <!-- RESULTS AUDIT REPORT -->
+    <div class="ats-report" id="atsReportSection">
+      <!-- TOP SCORE BANNER -->
+      <div class="ats-report-top">
+        <div class="ats-score-badge">
+          <div class="ats-big-circle" id="atsBigCircle">
+            <div class="ats-big-inner">
+              <div class="ats-big-num" id="atsBigScore">85</div>
+              <div style="font-size:0.65rem;color:var(--muted)">/ 100</div>
+            </div>
+          </div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--warning)">Estimated ATS Score</div>
+          <div class="ats-score-disclaimer">⚠️ Calculated estimate based on standard ATS heuristics. Real hiring tools may vary.</div>
+        </div>
+
+        <div class="ats-factors-list">
+          <h3 style="font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:4px" id="atsTargetRoleHeader">Target Role Alignment</h3>
+          <div class="ats-factor-row">
+            <div class="ats-factor-name">🔑 Keywords &amp; Technical Match (40%)</div>
+            <div class="ats-factor-bar"><div class="ats-factor-fill" id="atsBarKw" style="width:75%"></div></div>
+            <div class="ats-factor-pts" id="atsPtsKw">30/40</div>
+          </div>
+          <div class="ats-factor-row">
+            <div class="ats-factor-name">🏷️ Role &amp; Headline Alignment (15%)</div>
+            <div class="ats-factor-bar"><div class="ats-factor-fill" id="atsBarTitle" style="width:80%"></div></div>
+            <div class="ats-factor-pts" id="atsPtsTitle">12/15</div>
+          </div>
+          <div class="ats-factor-row">
+            <div class="ats-factor-name">📑 Standard Section Structure (20%)</div>
+            <div class="ats-factor-bar"><div class="ats-factor-fill" id="atsBarHeadings" style="width:100%"></div></div>
+            <div class="ats-factor-pts" id="atsPtsHeadings">20/20</div>
+          </div>
+          <div class="ats-factor-row">
+            <div class="ats-factor-name">🛡️ ATS Layout &amp; Format Safety (15%)</div>
+            <div class="ats-factor-bar"><div class="ats-factor-fill" id="atsBarFormat" style="width:90%"></div></div>
+            <div class="ats-factor-pts" id="atsPtsFormat">14/15</div>
+          </div>
+          <div class="ats-factor-row">
+            <div class="ats-factor-name">⚡ Measurable STAR Impact (10%)</div>
+            <div class="ats-factor-bar"><div class="ats-factor-fill" id="atsBarStar" style="width:90%"></div></div>
+            <div class="ats-factor-pts" id="atsPtsStar">9/10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARDS GRID: KEYWORDS & FORMAT HAZARDS -->
+      <div class="ats-sections-grid">
+        <!-- CARD 1: KEYWORDS MATCH -->
+        <div class="ats-card-sec">
+          <h4>✓ Matched Keywords (<span id="matchedCount">0</span>)</h4>
+          <div class="kw-chips-wrap" id="matchedChips"></div>
+          
+          <h4 style="margin-top:20px">✕ Missing from Resume (<span id="missingCount">0</span>)</h4>
+          <div class="kw-chips-wrap" id="missingChips"></div>
+          <div class="ethical-notice">💡 <strong>Ethical Notice:</strong> Only add missing skills if you genuinely possess hands-on experience with them. Do not fabricate experience.</div>
+        </div>
+
+        <!-- CARD 2: FORMAT HAZARDS -->
+        <div class="ats-card-sec">
+          <h4>🛡️ ATS Formatting &amp; Structure Hazards</h4>
+          <div id="atsHazardsList"></div>
+        </div>
+      </div>
+
+      <!-- ACTIONABLE IMPROVEMENT PLAN -->
+      <div style="margin-top:16px">
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--accent);margin-bottom:16px">📋 Prioritized Action Plan to Improve Compatibility</h3>
+        <div id="atsRecList"></div>
       </div>
     </div>
   </div>
@@ -592,7 +785,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <button class="btn btn-primary" style="padding:6px 16px;font-size:0.82rem" onclick="copyShareUrl()">📋 Copy Link</button>
     </div>
 
-    <!-- QR CODE -->
     <div class="qr-wrap" id="qrContainer"></div>
     <div style="text-align:center;font-size:0.75rem;color:var(--muted);margin-bottom:16px">Scan with mobile to view portfolio instantly</div>
 
@@ -674,9 +866,11 @@ var TECH_DICTIONARY = [
 // ====== NAVIGATION ======
 function pg(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
+  var target = document.getElementById(id);
+  if(target) target.classList.add('active');
   window.scrollTo(0,0);
   if(id==='fp'){load();upd();}
+  if(id==='ats-page'){updateAtsActiveInfo();}
 }
 function gts(n){cs=n;upd();}
 function nxt(){if(!val())return;if(cs<6){cs++;upd();}}
@@ -824,6 +1018,240 @@ function initE(){
   if(!document.getElementById('eduE').children.length)addEdu();
   if(!document.getElementById('expE').children.length)addExp();
   if(!document.getElementById('projE').children.length)addProj();
+}
+
+// ====== DEDICATED ATS TESTING LOGIC ======
+var SAMPLE_JDS = {
+  ai: "Role: Senior AI & Machine Learning Engineer\nResponsibilities:\n- Architect and deploy scalable LLM applications and retrieval-augmented generation (RAG) pipelines.\n- Build high-performance backend microservices using Python, FastAPI, Docker, and Kubernetes on AWS.\n- Implement vector database indexing with PostgreSQL and Redis.\n- Lead cross-functional engineering squads, perform code reviews, and optimize latency.\nRequirements:\n- 4+ years software engineering experience in Python, PyTorch, LangChain.\n- Deep understanding of distributed systems, CI/CD pipelines, and microservices architecture.",
+  ux: "Role: Lead Product Designer & UX Architect\nResponsibilities:\n- Lead end-to-end UX/UI design across web and mobile platforms.\n- Create and maintain scalable design systems with reusable components in Figma.\n- Conduct user research, usability testing, and wireframing.\n- Collaborate with frontend developers using HTML5/CSS3 and Tailwind CSS.\nRequirements:\n- 5+ years experience in product design, interaction design, and user research.",
+  cloud: "Role: Principal Cloud & DevOps Architect\nResponsibilities:\n- Direct cloud infrastructure strategy across AWS and GCP using Terraform.\n- Architect multi-cluster Kubernetes deployments with automated GitOps pipelines in ArgoCD.\n- Build robust monitoring and alerting with Prometheus and Grafana.\n- Institute zero-trust security and automated CI/CD pipelines.\nRequirements:\n- 6+ years experience in cloud architecture, Linux, Docker, Kubernetes, Python, and Go."
+};
+
+function openAtsPage(){
+  pg('ats-page');
+  updateAtsActiveInfo();
+}
+
+function updateAtsActiveInfo(){
+  var raw = localStorage.getItem('ar3');
+  var nameEl = document.getElementById('atsActiveName');
+  var roleEl = document.getElementById('atsActiveTitle');
+  if(raw){
+    try{
+      var d = JSON.parse(raw);
+      if(d.p && d.p.name) nameEl.textContent = d.p.name;
+      if(d.p && d.p.title) roleEl.textContent = d.p.title;
+    }catch(e){}
+  }
+}
+
+function loadSampleJd(type){
+  document.getElementById('atsJdInput').value = SAMPLE_JDS[type] || SAMPLE_JDS.ai;
+  toast('Sample Job Description loaded! 📋','ok');
+}
+
+function toggleAtsSource(){
+  var isCustom = document.getElementById('atsSrcCustom').checked;
+  document.getElementById('atsActiveResumeBox').style.display = isCustom ? 'none' : 'block';
+  document.getElementById('atsCustomResumeBox').style.display = isCustom ? 'block' : 'none';
+}
+
+async function runAtsCompatibilityTest(){
+  var jd = document.getElementById('atsJdInput').value.trim();
+  if(!jd){toast('Please paste or select a Job Description first','err');return;}
+
+  var isCustom = document.getElementById('atsSrcCustom').checked;
+  var customText = document.getElementById('atsCustomTextInput').value.trim();
+  var state = getResumeState();
+
+  if(isCustom && !customText){toast('Please paste your custom resume text','err');return;}
+  if(!isCustom && !state.p.name){toast('Please fill in your resume or load a demo profile first','err');return;}
+
+  toast('Analyzing ATS Compatibility... 🔍','ok');
+
+  var auditResult = null;
+  // Try backend API first
+  try {
+    var res = await fetch('/api/ats-test', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        job_description: jd,
+        resume: isCustom ? null : state,
+        resume_text: isCustom ? customText : ''
+      })
+    });
+    if(res.ok) auditResult = await res.json();
+  } catch(e){}
+
+  // Client-side fallback if offline
+  if(!auditResult){
+    auditResult = computeClientAtsAudit(jd, isCustom ? null : state, customText);
+  }
+
+  renderAtsReport(auditResult);
+}
+
+function computeClientAtsAudit(jdText, resume, rawText){
+  var jdLower = jdText.toLowerCase();
+  var resumeCorpus = '';
+  var targetTitle = 'Target Role';
+  var candidateTitle = '';
+  var candidateName = '';
+  var expBullets = [];
+  var hasEmail = false, hasPhone = false, hasLi = false;
+  var headings = [];
+
+  var lines = jdText.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
+  if(lines.length>0) targetTitle = lines[0].replace(/^(role|title|job description)[:\s]*/i,'') || 'Target Role';
+
+  if(resume){
+    candidateName = resume.p.name;
+    candidateTitle = resume.p.title;
+    hasEmail = bool(resume.p.email);
+    hasPhone = bool(resume.p.phone);
+    hasLi = bool(resume.p.li);
+    if(resume.p.sum) headings.push('Summary');
+    if(resume.exp && resume.exp.length) headings.push('Experience');
+    if(resume.edu && resume.edu.length) headings.push('Education');
+    if(resume.sk && resume.sk.length) headings.push('Skills');
+    resumeCorpus = JSON.stringify(resume).toLowerCase();
+    (resume.exp||[]).forEach(function(e){if(e.body) expBullets.push(e.body);});
+  } else {
+    resumeCorpus = (rawText||'').toLowerCase();
+    ['Summary','Experience','Education','Skills','Projects','Certifications'].forEach(function(h){
+      if(resumeCorpus.includes(h.toLowerCase())) headings.push(h);
+    });
+    hasEmail = resumeCorpus.includes('@');
+    hasPhone = /\+?\d[\d -]{7,}\d/.test(rawText||'');
+    hasLi = resumeCorpus.includes('linkedin.com');
+  }
+
+  function bool(v){return Boolean(v&&String(v).trim());}
+
+  var matched = [], missing = [];
+  TECH_DICTIONARY.forEach(function(kw){
+    if(jdLower.includes(kw.toLowerCase())){
+      if(resumeCorpus.includes(kw.toLowerCase())) matched.push(kw);
+      else missing.push(kw);
+    }
+  });
+
+  var totalKws = matched.length + missing.length;
+  var kwScore = totalKws > 0 ? Math.round((matched.length / totalKws) * 40) : 32;
+
+  var titleWords = targetTitle.toLowerCase().split(' ').filter(function(w){return w.length>3;});
+  var titleMatches = titleWords.filter(function(w){return (candidateTitle||resumeCorpus).toLowerCase().includes(w);}).length;
+  var titleScore = titleWords.length>0 ? Math.round((titleMatches/titleWords.length)*15) : 12;
+
+  var headingsScore = Math.round((headings.length / 4) * 20);
+  headingsScore = Math.min(20, headingsScore);
+
+  var formatHazards = [];
+  var formatScore = 15;
+  if(rawText && (rawText.includes('\t\t') || rawText.includes('|'))){
+    formatHazards.push({type:'warn',title:'Possible Table/Column Formatting',detail:'Complex tables may be parsed out of order by legacy ATS tools. Single-column format recommended.'});
+    formatScore -= 3;
+  }
+  if(!hasEmail){formatHazards.push({type:'danger',title:'Missing Clear Email Address',detail:'ATS bots require standard readable email header.'});formatScore-=4;}
+  if(!hasPhone){formatHazards.push({type:'warn',title:'Missing Phone Number',detail:'Include a standard phone number at top.'});formatScore-=2;}
+  if(!formatHazards.length){formatHazards.push({type:'ok',title:'Clean & Safe ATS Structure',detail:'Standard headings and readable text hierarchy detected.'});}
+
+  var starScore = 8;
+  var totalScore = Math.min(98, Math.max(25, kwScore + titleScore + headingsScore + formatScore + starScore));
+
+  var recs = [];
+  if(missing.length>0){
+    recs.push({
+      priority:'High',
+      title:'Incorporate Relevant Technical Keywords (If Genuine)',
+      message:'The job description emphasizes: ' + missing.slice(0,5).join(', ') + '. If you genuinely have experience with these tools, add them to your Skills list or Work Experience.'
+    });
+  }
+  if(titleScore < 10){
+    recs.push({
+      priority:'High',
+      title:'Align Target Role in Professional Headline',
+      message:'Your current title is "' + (candidateTitle||'Software Professional') + '". Aligning your headline with "' + targetTitle + '" increases ATS keyword ranking.'
+    });
+  }
+  recs.push({
+    priority:'Medium',
+    title:'Quantify Achievements with STAR Methodology',
+    message:'Include measurable metrics (%, numbers, scale) in every experience bullet point.'
+  });
+
+  return {
+    estimated_ats_score: totalScore,
+    target_job_title: targetTitle,
+    scoring_breakdown: {
+      keywords_match: {score: kwScore, max: 40},
+      title_alignment: {score: titleScore, max: 15},
+      section_headings: {score: headingsScore, max: 20},
+      formatting_safety: {score: formatScore, max: 15},
+      star_metrics: {score: starScore, max: 10}
+    },
+    matched_keywords: matched,
+    missing_keywords: missing,
+    formatting_hazards: formatHazards,
+    recommendations: recs
+  };
+}
+
+function renderAtsReport(data){
+  var rep = document.getElementById('atsReportSection');
+  rep.style.display = 'block';
+
+  var score = data.estimated_ats_score || 80;
+  document.getElementById('atsBigScore').textContent = score;
+  document.getElementById('atsBigCircle').style.background = 'conic-gradient(#f59e0b 0%,#ea580c '+score+'%,#1e3a5f '+score+'%)';
+  document.getElementById('atsTargetRoleHeader').textContent = '🎯 Target Role: ' + (data.target_job_title || 'Software Professional');
+
+  var bd = data.scoring_breakdown || {};
+  if(bd.keywords_match){
+    document.getElementById('atsBarKw').style.width = ((bd.keywords_match.score/bd.keywords_match.max)*100) + '%';
+    document.getElementById('atsPtsKw').textContent = bd.keywords_match.score + '/' + bd.keywords_match.max;
+  }
+  if(bd.title_alignment){
+    document.getElementById('atsBarTitle').style.width = ((bd.title_alignment.score/bd.title_alignment.max)*100) + '%';
+    document.getElementById('atsPtsTitle').textContent = bd.title_alignment.score + '/' + bd.title_alignment.max;
+  }
+  if(bd.section_headings){
+    document.getElementById('atsBarHeadings').style.width = ((bd.section_headings.score/bd.section_headings.max)*100) + '%';
+    document.getElementById('atsPtsHeadings').textContent = bd.section_headings.score + '/' + bd.section_headings.max;
+  }
+  if(bd.formatting_safety){
+    document.getElementById('atsBarFormat').style.width = ((bd.formatting_safety.score/bd.formatting_safety.max)*100) + '%';
+    document.getElementById('atsPtsFormat').textContent = bd.formatting_safety.score + '/' + bd.formatting_safety.max;
+  }
+  if(bd.star_metrics){
+    document.getElementById('atsBarStar').style.width = ((bd.star_metrics.score/bd.star_metrics.max)*100) + '%';
+    document.getElementById('atsPtsStar').textContent = bd.star_metrics.score + '/' + bd.star_metrics.max;
+  }
+
+  var matched = data.matched_keywords || [];
+  document.getElementById('matchedCount').textContent = matched.length;
+  document.getElementById('matchedChips').innerHTML = matched.length ? matched.map(function(m){return '<span class="kw-chip matched">✓ '+eh(m)+'</span>';}).join('') : '<span style="font-size:0.8rem;color:var(--muted)">No direct keywords matched yet</span>';
+
+  var missing = data.missing_keywords || [];
+  document.getElementById('missingCount').textContent = missing.length;
+  document.getElementById('missingChips').innerHTML = missing.length ? missing.map(function(m){return '<span class="kw-chip missing">✕ '+eh(m)+'</span>';}).join('') : '<span style="font-size:0.8rem;color:var(--accent3)">✓ All target keywords matched!</span>';
+
+  var hazards = data.formatting_hazards || [];
+  document.getElementById('atsHazardsList').innerHTML = hazards.map(function(h){
+    var cls = h.type === 'danger' ? 'danger' : (h.type === 'warn' ? 'warn' : 'ok');
+    var icon = h.type === 'danger' ? '⚠️' : (h.type === 'warn' ? '⚡' : '✅');
+    return '<div class="hazard-item '+cls+'"><span>'+icon+'</span><div><strong>'+eh(h.title)+'</strong><div style="font-size:0.75rem;opacity:0.85">'+eh(h.detail)+'</div></div></div>';
+  }).join('');
+
+  var recs = data.recommendations || [];
+  document.getElementById('atsRecList').innerHTML = recs.map(function(r){
+    var pCls = (r.priority||'').toLowerCase().includes('high') ? 'high' : ((r.priority||'').toLowerCase().includes('med') ? 'med' : 'low');
+    return '<div class="rec-item '+pCls+'"><div style="display:flex;align-items:center;margin-bottom:4px"><span class="rec-badge '+pCls+'">'+eh(r.priority||'Recommended')+'</span><strong>'+eh(r.title)+'</strong></div><p style="font-size:0.82rem;color:var(--muted);line-height:1.5">'+eh(r.message)+'</p></div>';
+  }).join('');
+
+  rep.scrollIntoView({behavior:'smooth'});
+  toast('ATS Compatibility Report generated! 🎯','ok');
 }
 
 // ====== SMART AUTO-IMPORT ======
@@ -1295,7 +1723,6 @@ function dlPort(){
   var d = JSON.parse(raw);
   var p = d.p;
   var portHtml = document.getElementById('portfolio-output').innerHTML;
-  var embeddedJson = JSON.stringify(d).replace(/</g,'\\u003c').replace(/>/g,'\\u003e');
 
   var full = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1.0">\n<title>' + eh(p.name) + ' - Portfolio</title>\n<style>\n*{box-sizing:border-box;margin:0;padding:0}body{font-family:Segoe UI,system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh}.container{max-width:900px;margin:0 auto;padding:60px 24px}.p-hero{text-align:center;padding:60px 0 40px}.p-name{font-size:3rem;font-weight:800;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.p-role{color:#64748b;margin-top:8px;font-size:1.1rem}.p-bio{max-width:600px;margin:20px auto 0;color:#94a3b8;line-height:1.7}.p-sec{margin:50px 0}.p-sec h3{font-size:1.15rem;font-weight:800;color:#00d4ff;border-bottom:1px solid #1e3a5f;padding-bottom:12px;margin-bottom:24px}.p-chips{display:flex;flex-wrap:wrap;gap:12px}.p-chip{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);color:#00d4ff;padding:8px 20px;border-radius:50px;font-size:0.9rem;font-weight:600}.p-proj{background:rgba(255,255,255,0.03);border:1px solid #1e3a5f;border-radius:14px;padding:24px;margin-bottom:16px}.p-proj h4{font-weight:700;margin-bottom:8px}.p-proj p{color:#64748b;font-size:0.9rem;line-height:1.6}.p-exp{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #1e3a5f}.p-exp:last-child{border-bottom:none}.p-exp-hdr{display:flex;justify-content:space-between;margin-bottom:4px}.p-exp-t{font-weight:700}.p-exp-d{color:#64748b;font-size:0.875rem}.p-exp-c{color:#00d4ff;font-size:0.875rem;margin-bottom:4px}.p-exp-b{color:#94a3b8;font-size:0.875rem;line-height:1.6}.p-contacts{display:flex;gap:14px;flex-wrap:wrap}.p-ct{background:rgba(255,255,255,0.04);border:1px solid #1e3a5f;border-radius:10px;padding:12px 20px;font-size:0.9rem}.p-ct span{color:#00d4ff;font-weight:600;display:block;font-size:0.75rem;margin-bottom:2px}footer{text-align:center;padding:40px 0;color:#1e3a5f;font-size:0.8rem}\n</style>\n</head>\n<body>\n<div class="container">' + portHtml + '</div>\n<footer>Built with AI Resume &amp; Portfolio Builder</footer>\n</body>\n</html>';
 

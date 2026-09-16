@@ -1,12 +1,12 @@
 <div align="center">
 
-# 🚀 AI Resume & Portfolio Builder v3.0
+# 🚀 AI Resume & Portfolio Builder v3.5
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 [![GitHub Pages](https://img.shields.io/badge/Frontend-GitHub%20Pages-222?logo=github)](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder)
 
-**Build, Tailor against Job Descriptions with STAR methodology, Publish Live Portfolios & Interact with an Embedded AI Recruiter Chatbot.**
+**Build, Tailor against Job Descriptions, Run Dedicated ATS Compatibility Tests, Publish Live Portfolios & Interact with an Embedded AI Recruiter Chatbot.**
 
 [🌐 Live Demo (GitHub Pages)](https://rohitnaiik420-ai.github.io/AI-Resume-portfolio-builder) &nbsp;|&nbsp;
 [📖 API Docs (FastAPI)](http://localhost:8000/docs) &nbsp;|&nbsp;
@@ -16,16 +16,20 @@
 
 ---
 
-## 🌟 What's New in v3.0
+## 🌟 What's New in v3.5
 
 | Feature | Description |
 |---|---|
-| 🎯 **Job Description (JD) Tailoring** | Paste any target JD to compute real-time ATS match percentage (0–100%) and see matched vs missing keywords. |
-| ✨ **STAR-Methodology AI Rewriter** | 1-Click optimization that rewrites experience bullet points into high-impact Situation-Task-Action-Result statements. |
+| 🧪 **Dedicated ATS Resume Testing** | Test your resume against any target Job Description (or sample JDs) with a transparent multi-factor estimated score (0–100%). |
+| 🔍 **ATS Formatting Hazard Inspector** | Scans for layout pitfalls that break legacy ATS systems: tables, multi-columns, missing contact info, and non-standard headings. |
+| 🏷️ **Matched & Missing Keyword Chips** | Visual keyword breakdown showing green matched chips and red missing chips with ethical truthfulness guidelines. |
+| 🎯 **Job Description (JD) Tailoring** | Tailor experience bullet points and summary with 1-click optimization tailored to your target job. |
+| ✨ **STAR-Methodology AI Rewriter** | Rewrites bullet points into high-impact Situation-Task-Action-Result statements with measurable metrics. |
 | 🚀 **1-Click Live Web Hosting** | Generate instant shareable live portfolio links (`#p=...` portable state or `/p/{slug}` backend URL) with QR code generator. |
 | 🤖 **Floating AI Recruiter Chatbot** | Context-aware AI chatbot widget embedded on your live portfolio to answer recruiter questions about skills, experience, and contact. |
 | ⚡ **Smart Auto-Import** | Enter your GitHub username to auto-import bio, repositories, stars, and languages into your portfolio in seconds. |
 | 📄 **LinkedIn / PDF Resume Parser** | Paste raw text or LinkedIn export to auto-populate all form fields. |
+
 
 ---
 
@@ -92,13 +96,15 @@ uvicorn backend.server:app --reload --port 8000
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/health` | API health check |
-| `POST` | `/api/score` | Compute AI Resume Score (0-100%) |
+| `POST` | `/api/ats-test` | Dedicated ATS compatibility audit & hazard scan (0-100% score) |
+| `POST` | `/api/score` | Compute AI Resume Quality Score (0-100%) |
 | `POST` | `/api/jd-tailor` | ATS Job Description match & STAR bullet rewriter |
 | `POST` | `/api/publish` | Publish portfolio and get permanent `/p/{slug}` URL |
 | `GET` | `/p/{slug}` | Render live public candidate portfolio with AI Chatbot |
 | `GET` | `/api/github-import/{user}` | Smart auto-import candidate info & repos from GitHub |
 | `GET` | `/api/sample/{1,2,3}` | Pre-built test profiles (AI Engineer, Designer, Cloud Architect) |
 | `GET` | `/docs` | Interactive Swagger UI |
+
 
 ---
 
